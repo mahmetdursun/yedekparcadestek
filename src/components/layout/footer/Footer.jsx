@@ -9,7 +9,6 @@ export default function Footer() {
           {/* Brand / about */}
           <div className="col-12 col-md-4">
             <div className="d-flex align-items-center gap-2 mb-2">
-              <img src="/images/logo-mark.svg" alt="" width="28" height="28" />
               <h6 className="m-0">yedekparcadestek</h6>
             </div>
             <p className="small mb-3">
