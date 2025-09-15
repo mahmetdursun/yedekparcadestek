@@ -3,6 +3,7 @@ import DealsSlider from '@/components/layout/deals-slider/DealsSlider';
 import PopularBrands from '@/components/layout/popular-brands/PopularBrands';
 import CategoryBanners from '@/components/layout/category-banners/CategoryBanners';
 import ProductCard from '@/components/product/ProductCard';
+import BrandShowcase from '@/components/layout/car-show-case/BrandShowcase';
 
 const DEMO = [
   { id:'1', brand:'Sachs',  title:'Ön Amortisör Sağ - BMW 1 Serisi E87', price:3062, img:'/images/products/amortisor.jpg' },
@@ -14,6 +15,14 @@ const DEMO = [
 ];
 
 export default function Home(){
+  const tiles = [
+    { name: 'Opel',       img: '/images/brand-tiles/opel.jpg' },
+    { name: 'Mercedes',   img: '/images/brand-tiles/mercedes-benz.jpg' },
+    { name: 'Ford',       img: '/images/brand-tiles/ford.jpg' },
+    { name: 'Volkswagen', img: '/images/brand-tiles/vw.jpg' },
+    { name: 'BMW',        img: '/images/brand-tiles/bmw.jpg' },
+    { name: 'Peugeot',    img: '/images/brand-tiles/peugeot.jpg' },
+  ];
   return (
     <div className="container">
       {/* Hero + Haftanın Fırsatları */}
@@ -22,7 +31,7 @@ export default function Home(){
         <div className="col-lg-3"><DealsSlider /></div>
       </div>
 
-      <PopularBrands />
+      {/* <PopularBrands /> */}
 
       <div className="mt-4">
         <CategoryBanners />
@@ -34,6 +43,8 @@ export default function Home(){
           {DEMO.map(p => <ProductCard key={p.id} p={p} />)}
         </div>
       </section>
+
+       <BrandShowcase items={tiles} />  {/* 👈 en alta yerleştir */}
     </div>
   );
 }

@@ -73,7 +73,7 @@ export default function Footer() {
       {/* Bottom */}
       <div className="footer-bottom">
         <div className="container d-flex flex-column flex-sm-row gap-2 justify-content-between align-items-center">
-          <span className="small text-muted">
+          <span className="small">
             © {new Date().getFullYear()} yedekparcadestek. Tüm hakları saklıdır.
           </span>
           <div className="small d-flex gap-3">

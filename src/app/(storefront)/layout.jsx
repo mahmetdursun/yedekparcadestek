@@ -1,23 +1,30 @@
 'use client';
-import { useState } from 'react';
+
 import Navbar from '@/components/layout/navbar/Navbar';
-import Sidebar from '@/components/layout/sidebar/Sidebar';
 import Footer from '@/components/layout/footer/Footer';
+
+// yeni yatay marka barı (bir önceki mesajda verdiğim BrandTopbar.jsx’i oluşturduysan)
+import Sidebar from '@/components/layout/sidebar/Sidebar';
+
 import '@/styles/layout.scss';
 
 export default function StorefrontLayout({ children }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
   return (
-    <div className={`sf-layout ${isCollapsed ? 'collapsed' : ''}`}>
-      <div className="sf-navbar">
-        <Navbar onToggleSidebar={() => setIsCollapsed(v => !v)} />
-      </div>
-      <div className="sf-layout__main">
-        <aside className="sf-layout__sidebar">
-          <Sidebar isCollapsed={isCollapsed} />
-        </aside>
-        <section className="sf-layout__outlet">{children}</section>
-      </div>
+    <div className="sf-layout">
+      {/* Üst navigasyon */}
+      <Navbar />
+
+      {/* NAVBAR'IN HEMEN ALTINDA YATAY MARKA BAR */}
+      <Sidebar />
+
+      {/* İçerik */}
+      <main className="sf-layout__main">
+        {/* soldaki aside ve Sidebar tamamen kaldırıldı */}
+        <section className="sf-layout__outlet">
+          {children}
+        </section>
+      </main>
+
       <Footer />
     </div>
   );
