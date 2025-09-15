@@ -6,15 +6,17 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && next build --turbopack"
   },
   "dependencies": {
+    "@prisma/client": "^6.15.0",
     "@auth/prisma-adapter": "^2.10.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fortawesome/fontawesome-free": "^7.0.1",
     "@mui/material": "^7.3.1",
-    "@prisma/client": "^6.15.0",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.11.0",
     "bcrypt": "^6.0.0",
@@ -32,6 +34,7 @@
     "swiper": "^11.2.10"
   },
   "devDependencies": {
+    "prisma": "^6.15.0",
     "@eslint/eslintrc": "^3",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
