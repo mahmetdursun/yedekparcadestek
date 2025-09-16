@@ -3,106 +3,184 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useRef, useState, useEffect } from "react";
-import { BRANDS, MODELS, toSlug, brandKey } from "../../../data/brandsModels";
+import {
+  BRANDS,
+  MODELS,
+  toSlug,
+  brandKey,
+  GROUPS_ORDER,
+  BRAND_GROUPS,
+} from "@/data/brandsModels";
+import { makeSidebarGroups } from "@/util/makeSidebarGroups";
 import { usePathname } from "next/navigation";
+import styles from "./style.module.scss";
 
 export default function Sidebar({ className = "" }) {
-  const [q, setQ] = useState("");
-  // hover için hem MODELS anahtarını (key) hem URL slug'ını (slug) tutuyoruz
-  const [hoverBrand, setHoverBrand] = useState(null); // { key: 'audi', slug: 'audi' }
+  const [hoverGroup, setHoverGroup] = useState(null); // "vw" | "fiat" | ...
+  const [hoverBrand, setHoverBrand] = useState(null); // { key, slug } | null
+
+  // gecikme/kapama zamanlayıcıları
+  const groupTimer = useRef(null);
+  const brandTimer = useRef(null);
   const hideTimer = useRef(null);
 
-  // Arama (BRANDS içinde isimde filtre)
-  const filtered = useMemo(() => {
-    if (!q) return BRANDS;
-    const nq = q.trim().toLowerCase();
-    return BRANDS.filter((b) => (b.name || "").toLowerCase().includes(nq));
-  }, [q]);
-
-  // Hover panel aç/kapa
-  const openPanel = (raw) => {
-    clearTimeout(hideTimer.current);
-    setHoverBrand({
-      key: brandKey(raw), // MODELS[...] için güvenli anahtar
-      slug: toSlug(raw), // URL için güvenli slug
-    });
-  };
-  const closePanelSoon = () => {
-    clearTimeout(hideTimer.current);
-    hideTimer.current = setTimeout(() => setHoverBrand(null), 120);
-  };
-
   const pathname = usePathname();
+
+  // Arama yok → doğrudan BRANDS
+  const groups = useMemo(
+    () => makeSidebarGroups(BRANDS, BRAND_GROUPS, GROUPS_ORDER),
+    []
+  );
+
+  // === Hover gecikmeleri (1sn) ===
+  const startGroupHover = (key) => {
+    clearTimeout(groupTimer.current);
+    groupTimer.current = setTimeout(() => {
+      setHoverGroup(key);
+      setHoverBrand(null);
+    }, 150);
+  };
+  const startBrandHover = (raw) => {
+    clearTimeout(brandTimer.current);
+    brandTimer.current = setTimeout(() => {
+      setHoverBrand({ key: brandKey(raw), slug: toSlug(raw) });
+    }, 150);
+  };
+  const abortHoverTimers = () => {
+    clearTimeout(groupTimer.current);
+    clearTimeout(brandTimer.current);
+  };
+  const closeSoon = () => {
+    abortHoverTimers();
+    clearTimeout(hideTimer.current);
+    hideTimer.current = setTimeout(() => {
+      setHoverBrand(null);
+      setHoverGroup(null);
+    }, 140);
+  };
+
+  // sayfa değişince paneli kapat
   useEffect(() => {
-    // sayfa/route değiştiğinde hover panel ve timer’ı sıfırla
+    abortHoverTimers();
     clearTimeout(hideTimer.current);
     setHoverBrand(null);
+    setHoverGroup(null);
+    return () => {
+      abortHoverTimers();
+      clearTimeout(hideTimer.current);
+    };
   }, [pathname]);
 
-  const models = hoverBrand ? MODELS[hoverBrand.key] || [] : [];
+  const models = hoverBrand ? (MODELS[hoverBrand.key] || []) : [];
 
   return (
     <div
-      className={`brand-top ${className}`}
-      style={{ "--brand-top-offset": "140px" }}
+      className={`${styles["brand-top"]} ${className}`}
+      style={{ ["--brand-top-offset"]: "140px" }} // JSX'te tip yok
     >
-      <div className="brand-top__inner container-fluid">
-        {/* arama */}
-        <div className="brand-top__search">
-          <input
-            type="text"
-            className="form-control form-control-sm"
-            placeholder="Marka ara…"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-          />
-        </div>
-
-        {/* yatay ray */}
-        <div className="brand-rail" onMouseLeave={closePanelSoon}>
-          {filtered.map((b) => {
-            const urlSlug = toSlug(b.slug || b.name);
-            const hoverRaw = b.slug || b.name; // openPanel'a ham değer
-            return (
-              <Link
-                key={`${b.slug}-${b.name}`}
-                href={`/marka/${urlSlug}`}
-                className="brand-pill"
-                title={b.name}
-                onMouseEnter={() => openPanel(hoverRaw)}
-              >
-                {b.logo ? (
-                  <Image src={b.logo} alt={b.name} width={20} height={20} />
-                ) : (
-                  <span className="brand-pill__fallback">{b.name?.[0]}</span>
-                )}
-                <span className="brand-pill__name">{b.name}</span>
-              </Link>
-            );
-          })}
+      <div className={`${styles["brand-top__inner"]} container-fluid`}>
+        {/* Grup şeridi (VW, FIAT, FORD, …) */}
+        <div className={styles["group-rail"]} onMouseLeave={closeSoon}>
+          {groups.map((g) => (
+            <button
+              key={g.key}
+              type="button"
+              data-group-id={g.id}
+              className={styles["group-pill"]}
+              data-active={hoverGroup === g.key ? "1" : undefined}
+              onMouseEnter={() => startGroupHover(g.key)} // hover → 1sn sonra aç
+              onMouseLeave={abortHoverTimers}
+              onClick={() => {
+                // tıkla → anında aç/kapa
+                setHoverBrand(null);
+                setHoverGroup((prev) => (prev === g.key ? null : g.key));
+              }}
+            >
+              {g.label}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* hover mega – altına açılır */}
+      {/* Seçili grubun markaları (logo + metin kartları) */}
+      {hoverGroup && (
+        <div
+          className={styles["group-brands"]}
+          onMouseEnter={() => clearTimeout(hideTimer.current)}
+          onMouseLeave={closeSoon}
+        >
+          <div className="container ps-3 ps-md-4">
+            <div className={styles["brand-rail"]}>
+              {groups
+                .find((g) => g.key === hoverGroup)
+                ?.items.map((b) => {
+                  const slug = toSlug(b.slug || b.name);
+                  const hoverRaw = b.slug || b.name;
+                  const isOpen = hoverBrand && hoverBrand.key === brandKey(hoverRaw);
+                  return (
+                    <Link
+                      key={`${b.slug}-${b.name}`}
+                      href={`/marka/${slug}`}
+                      className={styles["brand-pill"]}
+                      title={b.name}
+                      data-active={isOpen ? "1" : undefined}
+                      onMouseEnter={() => startBrandHover(hoverRaw)} // hover → 1sn sonra model panel
+                      onMouseLeave={abortHoverTimers}
+                      onClick={(e) => {
+                        // tıkla → ilk tık model panelini açar, ikinci tık linke gider
+                        if (!isOpen) {
+                          e.preventDefault();
+                          setHoverBrand({ key: brandKey(hoverRaw), slug: toSlug(hoverRaw) });
+                          return;
+                        }
+                        // linke giderken barı kapat
+                        setHoverGroup(null);
+                      }}
+                    >
+                      {b.logo ? (
+                        <Image src={b.logo} alt={b.name} width={56} height={56} />
+                      ) : (
+                        <span className={styles["brand-pill__fallback"]}>
+                          {b.name?.[0]}
+                        </span>
+                      )}
+                      <span className={styles["brand-pill__name"]}>{b.name}</span>
+                    </Link>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Model mega paneli */}
       {hoverBrand && models.length > 0 && (
         <div
-          className="brand-mega brand-mega--top"
-          onMouseEnter={() => clearTimeout(hideTimer.current)}
-          onMouseLeave={closePanelSoon}
+          className={styles["brand-mega--top"]}
+          onMouseEnter={() => {
+            abortHoverTimers();
+            clearTimeout(hideTimer.current);
+          }}
+          onMouseLeave={closeSoon}
         >
-          <div className="brand-mega__grid container-fluid">
+          <div className={`${styles["brand-mega__grid"]} container-fluid`}>
             {models.map((m) => (
               <Link
                 key={m.slug}
                 href={`/marka/${hoverBrand.slug}/${m.slug}`}
-                className="brand-mega__item"
+                className={styles["brand-mega__item"]}
+                onClick={() => {
+                  // model tıklanınca normalce git
+                  setHoverBrand(null);
+                  setHoverGroup(null);
+                }}
               >
                 {m.img && (
-                  <span className="brand-mega__thumb">
+                  <span className={styles["brand-mega__thumb"]}>
                     <Image src={m.img} alt={m.name} fill sizes="160px" />
                   </span>
                 )}
-                <span className="brand-mega__title">{m.name}</span>
+                <span className={styles["brand-mega__title"]}>{m.name}</span>
               </Link>
             ))}
           </div>

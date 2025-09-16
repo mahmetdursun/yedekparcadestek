@@ -1,0 +1,106 @@
+@use '../../../styles/variables' as *;
+
+/* Block: confirm */
+.confirm__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, .55); /* koyu, soft */
+  z-index: 1060;
+  animation: fadeIn .15s ease;
+}
+
+.confirm {
+  position: fixed;
+  inset: 0;
+  z-index: 1070;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.confirm__panel {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 22px 60px rgba(0,0,0,.25);
+  overflow: hidden;
+  animation: popIn .16s ease;
+}
+
+.confirm__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.confirm__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+.confirm__close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  color: #475569;
+  cursor: pointer;
+}
+
+.confirm__body {
+  padding: 14px;
+  color: #0f172a;
+}
+
+.confirm__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 12px 14px 16px;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* Buttons */
+.confirm__btn {
+  border-radius: 10px;
+  padding: .55rem .9rem;
+  font-weight: 700;
+  font-size: .95rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.confirm__btn--danger {
+  background: #ef4444;     /* red-500 */
+  border-color: #ef4444;
+  color: #fff;
+}
+.confirm__btn--danger:hover {
+  background: #dc2626;     /* red-600 */
+  border-color: #dc2626;
+}
+
+.confirm__btn--ghost {
+  background: #fff;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+.confirm__btn--ghost:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+/* animations */
+@keyframes fadeIn {
+  from { opacity: 0 } to { opacity: 1 }
+}
+@keyframes popIn {
+  from { transform: translateY(6px) scale(.98); opacity: 0 }
+  to   { transform: translateY(0) scale(1);     opacity: 1 }
+}

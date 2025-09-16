@@ -1,0 +1,107 @@
+@use '../../../styles/variables' as *; // gerekmezse silebilirsin
+
+/* ============ Block: account ============ */
+.account {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+/* Sidebar */
+.account__sidebar {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  padding: 12px;
+  height: fit-content;
+
+  top: 84px; /* navbar yüksekliğine göre ayarla */
+}
+
+.account__user {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 6px 10px;
+  border-bottom: 1px solid #eef2f7;
+  margin-bottom: 10px;
+}
+.account__avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: #f1f5f9;
+  font-size: 20px;
+}
+.account__hello { font-weight: 700; line-height: 1.1; }
+.account__hint  { font-size: 12px; color: #64748b; }
+
+.account__nav {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+}
+.account__nav-item {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #0f172a;
+  border: 1px solid transparent;
+  transition: background .12s ease, border-color .12s ease;
+}
+.account__nav-item:hover {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+.account__nav-item--active {
+  background: #eef2ff;     /* indigo-50 */
+  border-color: #c7d2fe;    /* indigo-200 */
+}
+.account__nav-ico { color: #475569; }
+.account__nav-label { font-weight: 500; }
+
+/* Content */
+.account__content {
+  min-height: 60vh;
+}
+
+/* Kart/Panel yardımcı sınıfı */
+.account-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.04);
+}
+
+/* Basit tablo görünümü */
+.table-lite {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table-lite th, .table-lite td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef2f7;
+}
+.table-lite th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  color: #64748b;
+}
+
+/* Mobil */
+@media (max-width: 991.98px) {
+  .account {
+    grid-template-columns: 1fr;
+  }
+  .account__sidebar {
+    position: static;
+  }
+}

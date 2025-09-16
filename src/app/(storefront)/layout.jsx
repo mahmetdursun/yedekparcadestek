@@ -6,7 +6,7 @@ import Footer from '@/components/layout/footer/Footer';
 // yeni yatay marka barı (bir önceki mesajda verdiğim BrandTopbar.jsx’i oluşturduysan)
 import Sidebar from '@/components/layout/sidebar/Sidebar';
 
-import '@/styles/layout.scss';
+import '@/styles/main.scss';
 
 export default function StorefrontLayout({ children }) {
   return (

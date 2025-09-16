@@ -1,4 +1,3 @@
-// src/components/cart/CartDrawer.jsx
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
@@ -13,6 +12,10 @@ import {
   clearCart,
 } from "@/store/slices/cartSlice";
 import Image from "next/image";
+import cn from "classnames";
+import styles from "./style.module.scss";
+import ConfirmDialog from "@/components/ui/ConfirmDialog/ConfirmDialog";
+
 
 export default function CartDrawer({ open, onClose }) {
   const items = useSelector(selectItems);
@@ -23,11 +26,11 @@ export default function CartDrawer({ open, onClose }) {
 
   const empty = items.length === 0;
 
- 
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
-  // 👇 bu hook her zaman çağrılıyor
+  // Esc ile kapat
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => e.key === "Escape" && onClose();
@@ -35,66 +38,91 @@ export default function CartDrawer({ open, onClose }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  // 👇 mounted değilse burada short-circuit
-  if (!mounted) {
-    return null;
-  }
+  if (!mounted) return null;
 
   return (
     <>
-      {/* arka plan gölgesi */}
+      {/* Backdrop */}
       <div
-        className={`offcanvas-backdrop ${open ? "show" : ""}`}
+        className={cn(
+          styles["cart-drawer__backdrop"],
+          { [styles["cart-drawer__backdrop--show"]]: open }
+        )}
         onClick={onClose}
-        style={{ display: open ? "block" : "none" }}
       />
+
+      {/* Drawer */}
       <aside
-        className={`cart-drawer ${open ? "open" : ""}`}
+        className={cn(
+          styles["cart-drawer"],
+          { [styles["cart-drawer--open"]]: open }
+        )}
         role="dialog"
         aria-modal="true"
         aria-label="Alışveriş Sepeti"
       >
-        <div className="cart-drawer__head">
+        <div className={styles["cart-drawer__head"]}>
           <strong>ALIŞVERİŞ SEPETİ</strong>
           <button className="btn-close" onClick={onClose} />
         </div>
 
-        <div className="cart-drawer__body">
+        <div className={styles["cart-drawer__body"]}>
           {empty ? (
             <div className="text-center text-muted py-5">Sepetiniz boş.</div>
           ) : (
             <ul className="list-unstyled m-0">
               {items.map((it) => (
-                <li key={it.id} className="cart-line">
-                  <div className="thumb">
+                <li key={it.id} className={styles["cart-drawer__line"]}>
+                  <div className={styles["cart-drawer__thumb"]}>
                     <Image src={it.img || "/vercel.svg"} alt={it.title} fill />
                   </div>
-                  <div className="meta">
-                    <div className="title">{it.title}</div>
-                    <div className="brand small text-muted">{it.brand}</div>
-                    <div className="qty">
+
+                  <div className={styles["cart-drawer__meta"]}>
+                    <div className={styles["cart-drawer__title"]}>{it.title}</div>
+                    <div className="small text-muted">{it.brand}</div>
+
+                    <div className={styles["cart-drawer__qty"]}>
                       <button
-                        className="btn btn-sm btn-outline-secondary"
+                        className={cn(
+                          "btn btn-sm",
+                          styles["cart-drawer__btn"],
+                          styles["cart-drawer__btn--outline"]
+                        )}
                         onClick={() => dispatch(dec(it.id))}
+                        aria-label="Azalt"
                       >
                         −
                       </button>
-                      <span className="mx-2">{it.qty}</span>
+
+                      <span className={styles["cart-drawer__qty-value"]}>
+                        {it.qty}
+                      </span>
+
                       <button
-                        className="btn btn-sm btn-outline-secondary"
+                        className={cn(
+                          "btn btn-sm",
+                          styles["cart-drawer__btn"],
+                          styles["cart-drawer__btn--outline"]
+                        )}
                         onClick={() => dispatch(inc(it.id))}
+                        aria-label="Arttır"
                       >
                         +
                       </button>
+
                       <button
-                        className="btn btn-link text-danger ms-3 p-0"
+                        className={cn(
+                          "btn",
+                          styles["cart-drawer__remove-btn"]
+                        )}
                         onClick={() => dispatch(removeItem(it.id))}
                       >
                         Sepetten Sil
                       </button>
                     </div>
                   </div>
-                  <div className="line-total">
+
+                  <div className={styles["cart-drawer__line-total"]}>
                     {(it.price * it.qty).toLocaleString("tr-TR")} TL
                   </div>
                 </li>
@@ -103,7 +131,7 @@ export default function CartDrawer({ open, onClose }) {
           )}
         </div>
 
-        <div className="cart-drawer__totals">
+        <div className={styles["cart-drawer__totals"]}>
           <div className="d-flex justify-content-between">
             <span>Ara Toplam</span>
             <strong>{subtotal.toLocaleString("tr-TR")} TL</strong>
@@ -118,116 +146,45 @@ export default function CartDrawer({ open, onClose }) {
           </div>
         </div>
 
-        <div className="cart-drawer__foot">
+        <div className={styles["cart-drawer__foot"]}>
           <button
-            className="btn btn-outline-secondary w-100"
-            onClick={() => {
-              if (confirm("Sepeti tamamen boşaltmak istiyor musunuz?")) {
-                dispatch(clearCart());
-              }
-            }}
+            className={cn(
+              "btn w-100",
+              styles["cart-drawer__foot-btn"],
+              styles["cart-drawer__foot-btn--outline"]
+            )}
+            onClick={() => setConfirmOpen(true)}
             disabled={empty}
           >
             Sepeti Boşalt
           </button>
-          <button className="btn btn-warning w-100 mt-2" disabled={empty}>
+
+          <ConfirmDialog
+            open={confirmOpen}
+            title="Sepeti Boşalt"
+            message="Sepeti tamamen boşaltmak istiyor musunuz?"
+            confirmText="Evet, boşalt"
+            cancelText="Vazgeç"
+            onConfirm={() => {
+              dispatch(clearCart());
+              setConfirmOpen(false);
+            }}
+            onClose={() => setConfirmOpen(false)}
+          />
+
+
+          <button
+            className={cn(
+              "btn w-100 mt-2",
+              styles["cart-drawer__foot-btn"],
+              styles["cart-drawer__foot-btn--warning"]
+            )}
+            disabled={empty}
+          >
             ALIŞVERİŞİ TAMAMLA
           </button>
         </div>
       </aside>
-
-      <style jsx>{`
-        .offcanvas-backdrop {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.35);
-          z-index: 1040;
-        }
-        .cart-drawer {
-          position: fixed;
-          top: 0;
-          right: 0;
-          height: 100%;
-          width: 420px;
-          max-width: 100%;
-          background: #fff;
-          z-index: 1050;
-          transform: translateX(100%);
-          transition: transform 0.24s ease;
-          display: grid;
-          grid-template-rows: auto 1fr auto auto;
-          border-left: 1px solid #e5e7eb;
-        }
-        .cart-drawer.open {
-          transform: translateX(0);
-        }
-
-        .cart-drawer__head {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 12px 16px;
-          border-bottom: 1px solid #eef2f7;
-        }
-        .cart-drawer__body {
-          overflow: auto;
-          padding: 8px 12px;
-        }
-        .cart-drawer__totals {
-          padding: 12px 16px;
-          border-top: 1px solid #eef2f7;
-        }
-        .cart-drawer__foot {
-          padding: 12px 16px;
-          border-top: 1px solid #eef2f7;
-        }
-
-        .cart-line {
-          display: grid;
-          grid-template-columns: 72px 1fr auto;
-          gap: 10px;
-          align-items: center;
-          padding: 10px 4px;
-          border-bottom: 1px solid #f3f4f6;
-        }
-        .cart-line .thumb {
-          position: relative;
-          width: 72px;
-          height: 72px;
-          border-radius: 8px;
-          overflow: hidden;
-          background: #fafafa;
-        }
-        .cart-line .meta .title {
-          font-size: 14px;
-          line-height: 1.2;
-        }
-        .cart-line .line-total {
-          font-weight: 600;
-          white-space: nowrap;
-        }
-
-        .offcanvas-backdrop {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.35);
-          z-index: 1040;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.18s ease;
-        }
-        .offcanvas-backdrop.show {
-          opacity: 1;
-          pointer-events: auto;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .cart-drawer,
-          .offcanvas-backdrop {
-            transition: none !important;
-          }
-        }
-      `}</style>
     </>
   );
 }

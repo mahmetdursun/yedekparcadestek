@@ -19,6 +19,8 @@ model User {
   firstName String?
   lastName  String?
   password  String? // local kayıt/giriş için bcrypt hash (opsiyonel)
+  phone     String?
+  birthDate DateTime?
 
   // timestamps
   createdAt DateTime @default(now())

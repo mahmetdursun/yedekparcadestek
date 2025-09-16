@@ -1,0 +1,114 @@
+@use './variables' as *;
+
+.sf-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    /* ANA GRID */
+    &__main {
+        flex: 1 1 auto;
+        gap: 16px;
+        padding: 16px;
+        overflow-x: hidden;
+    }
+
+    &.collapsed &__main {
+        grid-template-columns: $sidebar-w-collapsed 1fr $tools-w;
+    }
+
+    &__sidebar,
+    &__outlet {
+        min-height: 60vh;
+    }
+
+    /* ÜRÜN kartları basit görünüm */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .product-card {
+        background: $surface;
+        border: 1px solid $border;
+        border-radius: $radius;
+        box-shadow: $shadow;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+
+        .brand {
+            font-size: 14px;
+            color: $muted;
+        }
+
+        .title {
+            font-size: 14px;
+            line-height: 1.3;
+            min-height: 36px;
+        }
+
+        .price {
+            font-weight: 700;
+        }
+    }
+}
+
+//? markaların scss i
+// .brand-carousel .swiper {
+//     width: 100%;
+// }
+
+// .brand-carousel .swiper-wrapper {
+//     align-items: center;
+// }
+
+// /* logolar dikey ortalansın */
+
+// .brand-carousel__item {
+//     background: #fff;
+//     border: 1px solid #e5e7eb;
+//     border-radius: 12px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     height: 64px;
+//     padding: 8px;
+// }
+
+// .brand-carousel__item img {
+//     max-height: 36px;
+//     max-width: 100%;
+//     width: auto;
+//     height: auto;
+//     object-fit: contain;
+//     display: block;
+// }
+
+
+/* --- HERO SLIDER (global css; :global yok) --- */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
+.name {
+    flex: 1 1 auto;
+}
+
+.count {
+    color: #64748b;
+    font-size: 12px;
+}

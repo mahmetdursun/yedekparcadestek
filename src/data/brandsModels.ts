@@ -1,40 +1,159 @@
-export const BRANDS = [
-  { name: 'Abarth', slug: 'Abarth', count: '13.582', logo: '/images/car-logo/abarth.png' },
-  { name: 'Alfa Romeo', slug: 'Alfa', count: '13.582', logo: '/images/car-logo/alfa.png' },
-  { name: 'Audi', slug: 'audi', count: '13.582', logo: '/images/car-logo/audi.png' },
-  { name: 'BMW', slug: 'bmw', count: '24.860', logo: '/images/car-logo/bmw.png' },
-  { name: 'Chevrolet', slug: 'chevrolet', count: '102', logo: '/images/car-logo/chevrolet.png' },
-  { name: 'Chrysler', slug: 'chrysler', count: '102', logo: '/images/car-logo/chrysler.png' },
-  { name: 'Citroen', slug: 'citroen', count: '9.140', logo: '/images/car-logo/citroen.png' },
-  { name: 'Cupra', slug: 'cupra', count: '198', logo: '/images/car-logo/cupra.png' },
-  { name: 'Dacia', slug: 'dacia', count: '3.704', logo: '/images/car-logo/dacia.png' },
-  { name: 'DS', slug: 'ds', count: '3.704', logo: '/images/car-logo/ds.png' },
-  { name: 'Fiat', slug: 'fiat', count: '33.918', logo: '/images/car-logo/fiat.png' },
-  { name: 'Ford', slug: 'ford', count: '22.940', logo: '/images/car-logo/ford.png' },
-  { name: 'Honda', slug: 'honda', count: '11.298', logo: '/images/car-logo/honda.png' },
-  { name: 'Hyundai', slug: 'hyundai', count: '18.102', logo: '/images/car-logo/hyundai.png' },
-  { name: 'Infiniti', slug: 'infiniti', count: '18.102', logo: '/images/car-logo/infiniti.png' },
-  { name: 'Jeep', slug: 'jeep', count: '18.102', logo: '/images/car-logo/jeep.png' },
-  { name: 'Kia', slug: 'kia', count: '3.012', logo: '/images/car-logo/kia.png' },
-  { name: 'Lancia', slug: 'lancia', count: '3.012', logo: '/images/car-logo/lancia.png' },
-  { name: 'Land Rover', slug: 'land rover', count: '3.012', logo: '/images/car-logo/land-rover.png' },
-  { name: 'Lexus', slug: 'lexus', count: '3.012', logo: '/images/car-logo/lexus.png' },
-  { name: 'Mercedes-Benz', slug: 'mercedes', count: '19.992', logo: '/images/car-logo/mercedes-benz.png' },
-  { name: 'Mini', slug: 'mini', count: '19.992', logo: '/images/car-logo/mini.png' },
-  { name: 'Nissan', slug: 'nissan', count: '2.132', logo: '/images/car-logo/nissan.png' },
-  { name: 'Opel', slug: 'opel', count: '30.201', logo: '/images/car-logo/opel.png' },
-  { name: 'Peugeot', slug: 'peugeot', count: '14.893', logo: '/images/car-logo/peugeot.png' },
-  { name: 'Range Rover', slug: 'range rover', count: '55.783', logo: '/images/car-logo/range-rover.png' },
-  { name: 'Renault', slug: 'renault', count: '55.783', logo: '/images/car-logo/renault.png' },
-  { name: 'Seat', slug: 'seat', count: '6.637', logo: '/images/car-logo/seat.png' },
-  { name: 'Skoda', slug: 'skoda', count: '9.594', logo: '/images/car-logo/skoda.png' },
-  { name: 'Smart', slug: 'smart', count: '9.594', logo: '/images/car-logo/smart.png' },
-  { name: 'Tofaş', slug: 'tofas', count: '10.829', logo: '/images/car-logo/tofas.png' },
-  { name: 'Toyota', slug: 'toyota', count: '16.080', logo: '/images/car-logo/toyota.png' },
-  { name: 'Volkswagen', slug: 'volkswagen', count: '43.918', logo: '/images/car-logo/volkswagen.png' },
-  { name: 'Volvo', slug: 'volvo', count: '2.890', logo: '/images/car-logo/volvo.png' },
-];
+// === Marka Grupları ===
+// Üst strip’te gözüken ana grup sırası:
+export const GROUPS_ORDER = [
+  "vw","fiat","ford","hyundai","opel","renault",
+  "volvo","mercedes","bmw","toyota","kia","nissan","honda",
+] as const;
 
+export type BrandGroupKey = typeof GROUPS_ORDER[number];
+
+export type BrandGroup = {
+  id: number;            // ✅ sabit ID
+  label: string;
+  members: string[];     // toSlug’lu marka anahtarları (örn: "audi","land-rover")
+};
+
+export type Brand = {
+  name: string;
+  slug: string;
+  count: string;
+  logo: string;
+  // country?: CountryCode; // ileride tekrar kullanacaksan opsiyonel bırakabilirsin
+};
+
+export const BRAND_GROUPS: Record<BrandGroupKey, BrandGroup> = {
+  // 1) VW/AUDI/SEAT/SKODA/CUPRA
+  vw: {
+    id: 1,
+    label: "VW",
+    members: ["volkswagen","audi","seat","skoda","cupra"],
+  },
+
+  // 2) FIAT/LANCIA/ALFAROMEO/JEEP
+  // Not: BRANDS içinde Alfa Romeo'nun slug'ı "Alfa" -> toSlug("Alfa") === "alfa"
+  fiat: {
+    id: 2,
+    label: "FIAT",
+    members: ["fiat","lancia","alfa","jeep"],
+  },
+
+  // 3) FORD
+  ford: {
+    id: 3,
+    label: "FORD",
+    members: ["ford"],
+  },
+
+  // 4) HYUNDAI
+  hyundai: {
+    id: 4,
+    label: "HYUNDAI",
+    members: ["hyundai"],
+  },
+
+  // 5) OPEL/PEUGEOT/CITROEN/DS/CHEVROLET
+  opel: {
+    id: 5,
+    label: "OPEL",
+    members: ["opel","peugeot","citroen","ds","chevrolet"],
+  },
+
+  // 6) RENAULT/DACIA
+  renault: {
+    id: 6,
+    label: "RENAULT",
+    members: ["renault","dacia"],
+  },
+
+  // 7) VOLVO
+  volvo: {
+    id: 7,
+    label: "VOLVO",
+    members: ["volvo"],
+  },
+
+  // 8) MERCEDES/SMART
+  mercedes: {
+    id: 8,
+    label: "MERCEDES",
+    members: ["mercedes","smart"],
+  },
+
+  // 9) BMW/LANDROVER/RANGEROVER/MINI
+  // Not: "land rover" -> toSlug => "land-rover"; "range rover" -> "range-rover"
+  bmw: {
+    id: 9,
+    label: "BMW",
+    members: ["bmw","land-rover","range-rover","mini"],
+  },
+
+  // 10) TOYOTA/LEXUS
+  toyota: {
+    id: 10,
+    label: "TOYOTA",
+    members: ["toyota","lexus"],
+  },
+
+  // 11) KIA
+  kia: {
+    id: 11,
+    label: "KIA",
+    members: ["kia"],
+  },
+
+  // 12) NISSAN/INFINITI
+  nissan: {
+    id: 12,
+    label: "NISSAN",
+    members: ["nissan","infiniti"],
+  },
+
+  // 13) HONDA
+  honda: {
+    id: 13,
+    label: "HONDA",
+    members: ["honda"],
+  },
+};
+
+
+// === Markalar (mevcut listen aynı) ===
+export const BRANDS: Brand[] = [
+  { name:'Abarth',         slug:'Abarth',        count:'13.582', logo:'/images/car-logo/abarth.png',         },
+  { name:'Alfa Romeo',     slug:'Alfa',          count:'13.582', logo:'/images/car-logo/alfa.png',           },
+  { name:'Audi',           slug:'audi',          count:'13.582', logo:'/images/car-logo/audi.png',           },
+  { name:'BMW',            slug:'bmw',           count:'24.860', logo:'/images/car-logo/bmw.png',            },
+  { name:'Chevrolet',      slug:'chevrolet',     count:'102',    logo:'/images/car-logo/chevrolet.png',      },
+  { name:'Chrysler',       slug:'chrysler',      count:'102',    logo:'/images/car-logo/chrysler.png',       },
+  { name:'Citroen',        slug:'citroen',       count:'9.140',  logo:'/images/car-logo/citroen.png',        },
+  { name:'Cupra',          slug:'cupra',         count:'198',    logo:'/images/car-logo/cupra.png',          },
+  { name:'Dacia',          slug:'dacia',         count:'3.704',  logo:'/images/car-logo/dacia.png',          },
+  { name:'DS',             slug:'ds',            count:'3.704',  logo:'/images/car-logo/ds.png',             },
+  { name:'Fiat',           slug:'fiat',          count:'33.918', logo:'/images/car-logo/fiat.png',           },
+  { name:'Ford',           slug:'ford',          count:'22.940', logo:'/images/car-logo/ford.png',           },
+  { name:'Honda',          slug:'honda',         count:'11.298', logo:'/images/car-logo/honda.png',          },
+  { name:'Hyundai',        slug:'hyundai',       count:'18.102', logo:'/images/car-logo/hyundai.png',        },
+  { name:'Infiniti',       slug:'infiniti',      count:'18.102', logo:'/images/car-logo/infiniti.png',       },
+  { name:'Jeep',           slug:'jeep',          count:'18.102', logo:'/images/car-logo/jeep.png',           },
+  { name:'Kia',            slug:'kia',           count:'3.012',  logo:'/images/car-logo/kia.png',            },
+  { name:'Lancia',         slug:'lancia',        count:'3.012',  logo:'/images/car-logo/lancia.png',         },
+  { name:'Land Rover',     slug:'land rover',    count:'3.012',  logo:'/images/car-logo/land-rover.png',     },
+  { name:'Lexus',          slug:'lexus',         count:'3.012',  logo:'/images/car-logo/lexus.png',          },
+  { name:'Mercedes-Benz',  slug:'mercedes',      count:'19.992', logo:'/images/car-logo/mercedes-benz.png',  },
+  { name:'Mini',           slug:'mini',          count:'19.992', logo:'/images/car-logo/mini.png',           },
+  { name:'Nissan',         slug:'nissan',        count:'2.132',  logo:'/images/car-logo/nissan.png',         },
+  { name:'Opel',           slug:'opel',          count:'30.201', logo:'/images/car-logo/opel.png',           },
+  { name:'Peugeot',        slug:'peugeot',       count:'14.893', logo:'/images/car-logo/peugeot.png',        },
+  { name:'Range Rover',    slug:'range rover',   count:'55.783', logo:'/images/car-logo/range-rover.png',    },
+  { name:'Renault',        slug:'renault',       count:'55.783', logo:'/images/car-logo/renault.png',        },
+  { name:'Seat',           slug:'seat',          count:'6.637',  logo:'/images/car-logo/seat.png',           },
+  { name:'Skoda',          slug:'skoda',         count:'9.594',  logo:'/images/car-logo/skoda.png',          },
+  { name:'Smart',          slug:'smart',         count:'9.594',  logo:'/images/car-logo/smart.png',          },
+  { name:'Tofaş',          slug:'tofas',         count:'10.829', logo:'/images/car-logo/tofas.png',          },
+  { name:'Toyota',         slug:'toyota',        count:'16.080', logo:'/images/car-logo/toyota.png',         },
+  { name:'Volkswagen',     slug:'volkswagen',    count:'43.918', logo:'/images/car-logo/volkswagen.png',     },
+  { name:'Volvo',          slug:'volvo',         count:'2.890',  logo:'/images/car-logo/volvo.png',          },
+];
 
 export const MODELS: Record<string, {name:string; slug:string; img?:string}[]> = {
   chevrolet: [
@@ -110,21 +229,27 @@ export const MODELS: Record<string, {name:string; slug:string; img?:string}[]> =
     { name: 'Golf 7', slug: 'golf-7', img: '/images/models/vw/golf7.jpg' },
     { name: 'Passat B8', slug: 'passat-b8', img: '/images/models/vw/passat-b8.jpg' },
   ],
-}
+};
 
-// Türkçe normalize (senin fonksiyonun)
+
+// Türkçe normalize
 export const norm = (s: string = ""): string =>
   s.toLowerCase()
-   .split("ç").join("c")
-   .split("ğ").join("g")
-   .split("ı").join("i")
-   .split("ö").join("o")
-   .split("ş").join("s")
-   .split("ü").join("u");
+   .replace(/ç/g,"c").replace(/ğ/g,"g").replace(/ı/g,"i")
+   .replace(/ö/g,"o").replace(/ş/g,"s").replace(/ü/g,"u");
 
-// URL için güvenli slug üret (boşluk → -, vs.)
-export const toSlug = (s='') =>
-  norm(s).replace(/\s+/g,'-');
+// URL-uyumlu
+export const toSlug = (s = "") => norm(s).replace(/\s+/g, "-");
 
-// BRANDS’teki slug’lar karışıksa (Abarth/Audi vs) burada tekilleştiriyoruz
-export const brandKey = (slugOrName='') => norm(slugOrName);
+// MODELS anahtarı için kanonikleştir
+const BRAND_ALIAS: Record<string, string> = {
+  "mercedes": "mercedes-benz",
+  "land-rover": "land-rover",
+  "range-rover": "land-rover",   // Range Rover → Land Rover modellerini kullan
+  "alfa": "alfa-romeo",          // istersen ekledim; MODELS ekleyince işine yarar
+};
+
+export const brandKey = (slugOrName = "") => {
+  const s = toSlug(slugOrName);
+  return BRAND_ALIAS[s] || s;
+};

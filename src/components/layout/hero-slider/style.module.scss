@@ -1,0 +1,33 @@
+@use '../../../styles/variables' as *;
+
+.banner-hero {
+  border-radius: 14px;
+  overflow: hidden;
+
+  /* Swiper’ın kendi sınıflarını module içinde global hedefle */
+  :global(.swiper) { width: 100%; }
+  :global(.swiper-button-prev),
+  :global(.swiper-button-next) {
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  :global(.swiper-button-prev) { left: 16px; }
+  :global(.swiper-button-next) { right: 16px; }
+  :global(.swiper-pagination-bullet-active) { background: #df4f4f; }
+}
+
+/* Görsel alanı (yüksekliği oranla belirle) */
+/* Swiper içindeki görseller için oranlı alan */
+.banner-hero__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 17 / 8;
+    /* responsive yükseklik */
+    background: #111;
+    /* görsel gelmezse zemin */
+}
+
+

@@ -1,0 +1,71 @@
+@charset "UTF-8";
+.sf-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* ANA GRID */
+  /* ÜRÜN kartları basit görünüm */
+}
+.sf-layout__main {
+  flex: 1 1 auto;
+  gap: 16px;
+  padding: 16px;
+  overflow-x: hidden;
+}
+.sf-layout.collapsed .sf-layout__main {
+  grid-template-columns: 80px 1fr 300px;
+}
+.sf-layout__sidebar, .sf-layout__outlet {
+  min-height: 60vh;
+}
+.sf-layout .product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.sf-layout .product-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.1);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sf-layout .product-card img {
+  width: 100%;
+  height: 140px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 10px;
+  background: #fafafa;
+}
+.sf-layout .product-card .brand {
+  font-size: 14px;
+  color: #6b7280;
+}
+.sf-layout .product-card .title {
+  font-size: 14px;
+  line-height: 1.3;
+  min-height: 36px;
+}
+.sf-layout .product-card .price {
+  font-weight: 700;
+}
+
+/* --- HERO SLIDER (global css; :global yok) --- */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.name {
+  flex: 1 1 auto;
+}
+
+.count {
+  color: #64748b;
+  font-size: 12px;
+}/*# sourceMappingURL=main.css.map */

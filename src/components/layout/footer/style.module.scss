@@ -1,0 +1,60 @@
+@use '../../../styles/variables' as *;
+
+.siteFooter {
+  background: #0f172a;
+  color: #eef2ff;
+
+  /* varsa üst şerit için */
+  .footer-newsletter {
+    background: #dc2626;
+    padding: 12px 0;
+  }
+}
+
+.footerTitle {
+  margin: 0 0 8px;
+  font-size: 14px;
+  letter-spacing: .2px;
+  color: #e2e8f0;
+  text-transform: uppercase;
+}
+
+.footerLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li a {
+    display: block;
+    padding: 6px 0;
+    font-size: 14px;
+    color: #cbd5e1;
+    text-decoration: none;
+
+    &:hover { color: #fff; }
+  }
+}
+
+.socialBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #e2e8f0;
+  border: 1px solid rgba(226, 232, 240, .35);
+  transition: .2s;
+
+  &:hover {
+    background: #df4f4f;
+    border-color: #df4f4f;
+    color: #fff;
+  }
+}
+
+.footerBottom {
+  border-top: 1px solid rgba(226, 232, 240, .12);
+  padding: 12px 0;
+  background: #0b1221;
+}
