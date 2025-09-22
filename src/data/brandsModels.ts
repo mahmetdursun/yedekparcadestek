@@ -25,7 +25,7 @@ export const BRAND_GROUPS: Record<BrandGroupKey, BrandGroup> = {
   // 1) VW/AUDI/SEAT/SKODA/CUPRA
   vw: {
     id: 1,
-    label: "VW",
+    label: "VAG",
     members: ["volkswagen","audi","seat","skoda","cupra"],
   },
 
@@ -54,7 +54,7 @@ export const BRAND_GROUPS: Record<BrandGroupKey, BrandGroup> = {
   // 5) OPEL/PEUGEOT/CITROEN/DS/CHEVROLET
   opel: {
     id: 5,
-    label: "OPEL",
+    label: "PSA",
     members: ["opel","peugeot","citroen","ds","chevrolet"],
   },
 
@@ -174,6 +174,7 @@ export const MODELS: Record<string, {name:string; slug:string; img?:string}[]> =
     { name: '3 Serisi F30', slug: '3-f30', img: '/images/models/bmw/3-f30.jpg' },
     { name: '5 Serisi G30', slug: '5-g30', img: '/images/models/bmw/5-g30.jpg' },
   ],
+  
   audi: [
     { name: 'A1', slug: 'a1', img: '/images/car-models/audi-a1.jpg' },
     { name: 'A3 (1997-2003)', slug: 'a3-1997', img: '/images/car-models/audi-a3(1997).jpg' },
@@ -213,7 +214,7 @@ export const MODELS: Record<string, {name:string; slug:string; img?:string}[]> =
     { name: 'Q3 (2013-)', slug: 'q3-2020', img: '/images/car-models/audi-q3(2020).jpg' },
 
     { name: 'Q5 (2008-2016)', slug: 'q5-2008', img: '/images/car-models/audi-q5(2008).jpg' },
-    { name: 'Q5 (2017-)', slug: 'q5-2015', img: '/images/car-models/audi-q5(2015).jpg' },
+    { name: 'Q5 (2017-)', slug: 'q5-2015', img: '/images/car-models/audi-q5(2017).jpg' },
 
     { name: 'Q7 (2006-2014)', slug: 'q7-2006', img: '/images/car-models/audi-q7(2006).jpg' },
     { name: 'Q7 (2015-)', slug: 'q7-2015', img: '/images/car-models/audi-q7(2015).jpg' },
@@ -225,10 +226,177 @@ export const MODELS: Record<string, {name:string; slug:string; img?:string}[]> =
     { name: 'C W204', slug: 'c-w204', img: '/images/models/mercedes/c-w204.jpg' },
     { name: 'E W212', slug: 'e-w212', img: '/images/models/mercedes/e-w212.jpg' },
   ],
+
   volkswagen: [
-    { name: 'Golf 7', slug: 'golf-7', img: '/images/models/vw/golf7.jpg' },
-    { name: 'Passat B8', slug: 'passat-b8', img: '/images/models/vw/passat-b8.jpg' },
-  ],
+  // Polo
+  { name: 'Polo (1994-2002)', slug: 'polo-1994', img: '/images/car-models/vw-polo(1994).jpg' },
+  { name: 'Polo (2002-2009)', slug: 'polo-2002', img: '/images/car-models/vw-polo(2002).jpg' },
+  { name: 'Polo (2009-2017)', slug: 'polo-2009', img: '/images/car-models/vw-polo(2009).jpg' },
+  { name: 'Polo (2017-2021)', slug: 'polo-2017', img: '/images/car-models/vw-polo(2017).jpg' },
+  { name: 'Polo (2021-)', slug: 'polo-2021', img: '/images/car-models/vw-polo(2021).jpg' },
+
+  // Golf
+  { name: 'Golf (1992-1997)', slug: 'golf-1992', img: '/images/car-models/vw-golf(1992).jpg' },
+  { name: 'Golf (1997-2003)', slug: 'golf-1997', img: '/images/car-models/vw-golf(1997).jpg' },
+  { name: 'Golf (2003-2008)', slug: 'golf-2003', img: '/images/car-models/vw-golf(2003).jpg' },
+  { name: 'Golf (2008-2012)', slug: 'golf-2008', img: '/images/car-models/vw-golf(2008).jpg' },
+  { name: 'Golf (2012-2019)', slug: 'golf-2012', img: '/images/car-models/vw-golf(2012).jpg' },
+  { name: 'Golf (2020-)', slug: 'golf-2020', img: '/images/car-models/vw-golf(2020).jpg' },
+
+  // Jetta
+  { name: 'Jetta (1999-2005)', slug: 'jetta-1999', img: '/images/car-models/vw-jetta(1999).jpg' },
+  { name: 'Jetta (2005-2010)', slug: 'jetta-2005', img: '/images/car-models/vw-jetta(2005).jpg' },
+  { name: 'Jetta (2010-2018)', slug: 'jetta-2010', img: '/images/car-models/vw-jetta(2010).jpg' },
+
+  // Passat
+  { name: 'Passat (1996-2005)', slug: 'passat-1996', img: '/images/car-models/vw-passat(1996).jpg' },
+  { name: 'Passat (2005-2010)', slug: 'passat-2005', img: '/images/car-models/vw-passat(2005).jpg' },
+  { name: 'Passat (2010-2014)', slug: 'passat-2010', img: '/images/car-models/vw-passat(2010).jpg' },
+  { name: 'Passat (2015-2022)', slug: 'passat-2015', img: '/images/car-models/vw-passat(2015).jpg' },
+  { name: 'Passat (2023-)', slug: 'passat-2023', img: '/images/car-models/vw-passat(2023).jpg' },
+
+  // Beetle
+  { name: 'Beetle (1950-1980)', slug: 'beetle-1950', img: '/images/car-models/vw-beetle(1950).jpg' },
+  { name: 'New Beetle (1998-2010)', slug: 'beetle-1998', img: '/images/car-models/vw-beetle(1998).jpg' },
+  { name: 'Beetle (2011-2019)', slug: 'beetle-2011', img: '/images/car-models/vw-beetle(2011).jpg' },
+
+  // Scirocco
+  { name: 'Scirocco (2008-2017)', slug: 'scirocco-2008', img: '/images/car-models/vw-scirocco(2009).jpg' },
+
+  // Tiguan
+  { name: 'Tiguan (2007-2016)', slug: 'tiguan-2007', img: '/images/car-models/vw-tiguan(2007).jpg' },
+  { name: 'Tiguan (2016-)', slug: 'tiguan-2016', img: '/images/car-models/vw-tiguan(2016).jpg' },
+
+  // Touareg
+  { name: 'Touareg (2002-2010)', slug: 'touareg-2002', img: '/images/car-models/vw-touareg(2002).jpg' },
+  { name: 'Touareg (2010-2018)', slug: 'touareg-2010', img: '/images/car-models/vw-touareg(2010).jpg' },
+  { name: 'Touareg (2018-)', slug: 'touareg-2018', img: '/images/car-models/vw-touareg(2018).jpg' },
+
+  // T-Roc
+  { name: 'T-Roc (2017-)', slug: 't-roc-2017', img: '/images/car-models/vw-troc(2017).jpg' },
+
+  // T-Cross
+  { name: 'T-Cross (2019-)', slug: 't-cross-2019', img: '/images/car-models/vw-tcross(2019).jpg' },
+
+  // Taigo
+  { name: 'Taigo (2021-)', slug: 'taigo-2021', img: '/images/car-models/vw-taigo(2021).jpg' },
+],
+
+seat: [
+  // Ibiza
+  { name: 'Ibiza (1993-2002)', slug: 'ibiza-1993', img: '/images/car-models/seat-ibiza(1993).jpg' },
+  { name: 'Ibiza (2002-2008)', slug: 'ibiza-2002', img: '/images/car-models/seat-ibiza(2002).jpg' },
+  { name: 'Ibiza (2008-2017)', slug: 'ibiza-2008', img: '/images/car-models/seat-ibiza(2008).jpg' },
+  { name: 'Ibiza (2017-)',     slug: 'ibiza-2017', img: '/images/car-models/seat-ibiza(2017).jpg' },
+
+  // León
+  { name: 'León (1999-2005)', slug: 'leon-1999', img: '/images/car-models/seat-leon(1999).jpg' },
+  { name: 'León (2005-2012)', slug: 'leon-2005', img: '/images/car-models/seat-leon(2005).jpg' },
+  { name: 'León (2012-2020)', slug: 'leon-2012', img: '/images/car-models/seat-leon(2012).jpg' },
+  { name: 'León (2020-)',     slug: 'leon-2020', img: '/images/car-models/seat-leon(2020).jpg' },
+
+  // Toledo
+  { name: 'Toledo (1993-1998)', slug: 'toledo-1993', img: '/images/car-models/seat-toledo(1993).jpg' },
+  { name: 'Toledo (1998-2004)', slug: 'toledo-1998', img: '/images/car-models/seat-toledo(1998).jpg' },
+  { name: 'Toledo (2004-2009)', slug: 'toledo-2004', img: '/images/car-models/seat-toledo(2004).jpg' },
+  { name: 'Toledo (2012-2019)', slug: 'toledo-2012', img: '/images/car-models/seat-toledo(2012).png' },
+
+  // Córdoba (Ibiza sedan)
+  { name: 'Córdoba (1998-2002)', slug: 'cordoba-1998', img: '/images/car-models/seat-cordoba(1998).jpg' },
+  { name: 'Córdoba (2002-2009)', slug: 'cordoba-2002', img: '/images/car-models/seat-cordoba(2002).jpg' },
+
+  // Altea
+  { name: 'Altea (2004-2015)', slug: 'altea-2004', img: '/images/car-models/seat-altea(2004).jpg' },
+
+  // Alhambra
+  { name: 'Alhambra (2002-2010)', slug: 'alhambra-2002', img: '/images/car-models/seat-alhambra(2002).jpg' },
+  { name: 'Alhambra (2010-2020)', slug: 'alhambra-2010', img: '/images/car-models/seat-alhambra(2010).jpg' },
+
+  // Ateca (SUV)
+  { name: 'Ateca (2016-2020)', slug: 'ateca-2016', img: '/images/car-models/seat-ateca(2016).jpg' },
+  { name: 'Ateca (2020-)',     slug: 'ateca-2020', img: '/images/car-models/seat-ateca(2020).jpg' },
+
+  // Arona (SUV)
+  { name: 'Arona (2017-2021)', slug: 'arona-2017', img: '/images/car-models/seat-arona(2017).jpg' },
+  { name: 'Arona (2021-)',     slug: 'arona-2021', img: '/images/car-models/seat-arona(2021).jpg' },
+
+  // Tarraco (SUV)
+  { name: 'Tarraco (2018-)', slug: 'tarraco-2018', img: '/images/car-models/seat-tarraco(2018).jpg' },
+
+  // Mii / Mii Electric
+  { name: 'Mii (2011-2021)', slug: 'mii-2011', img: '/images/car-models/seat-mii(2011).jpg' },
+],
+
+skoda: [
+  // Fabia
+  { name: 'Fabia (1999-2007)', slug: 'fabia-1999', img: '/images/car-models/skoda-fabia(1999).jpg' },
+  { name: 'Fabia (2007-2014)', slug: 'fabia-2007', img: '/images/car-models/skoda-fabia(2007).jpg' },
+  { name: 'Fabia (2014-2021)', slug: 'fabia-2014', img: '/images/car-models/skoda-fabia(2014).jpg' },
+  { name: 'Fabia (2021-)',     slug: 'fabia-2021', img: '/images/car-models/skoda-fabia(2021).jpg' },
+
+  // Octavia
+  { name: 'Octavia (1996-2004)', slug: 'octavia-1996', img: '/images/car-models/skoda-octavia(1996).jpg' },
+  { name: 'Octavia (2004-2013)', slug: 'octavia-2004', img: '/images/car-models/skoda-octavia(2004).jpg' },
+  { name: 'Octavia (2013-2020)', slug: 'octavia-2013', img: '/images/car-models/skoda-octavia(2013).jpg' },
+  { name: 'Octavia (2020-)',     slug: 'octavia-2020', img: '/images/car-models/skoda-octavia(2020).jpg' },
+
+  // Superb
+  { name: 'Superb (2001-2008)', slug: 'superb-2001', img: '/images/car-models/skoda-superb(2001).jpg' },
+  { name: 'Superb (2008-2015)', slug: 'superb-2008', img: '/images/car-models/skoda-superb(2008).jpg' },
+  { name: 'Superb (2015-2023)', slug: 'superb-2015', img: '/images/car-models/skoda-superb(2015).jpg' },
+  { name: 'Superb (2024-)',     slug: 'superb-2024', img: '/images/car-models/skoda-superb(2024).jpg' },
+
+  // Rapid / Scala
+  { name: 'Rapid (2012-2019)', slug: 'rapid-2012', img: '/images/car-models/skoda-rapid(2012).jpg' },
+  { name: 'Scala (2019-)',     slug: 'scala-2019', img: '/images/car-models/skoda-scala(2019).jpg' },
+
+  // Citigo
+  { name: 'Citigo (2011-2020)', slug: 'citigo-2011', img: '/images/car-models/skoda-citigo(2011).jpg' },
+
+  // Roomster
+  { name: 'Roomster (2006-2015)', slug: 'roomster-2006', img: '/images/car-models/skoda-roomster(2006).jpg' },
+
+    // Yeti
+  { name: 'Yeti (2009-2017)', slug: 'yeti-2009', img: '/images/car-models/skoda-yeti(2009).jpg' },
+
+   // SUV Serisi
+  { name: 'Kodiaq (2016-2023)', slug: 'kodiaq-2016', img: '/images/car-models/skoda-kodiaq(2016).jpg' },
+  { name: 'Kodiaq (2024-)',     slug: 'kodiaq-2024', img: '/images/car-models/skoda-kodiaq(2024).jpg' },
+
+  { name: 'Karoq (2017-2021)', slug: 'karoq-2017', img: '/images/car-models/skoda-karoq(2017).jpg' },
+  { name: 'Karoq (2022-)',     slug: 'karoq-2022', img: '/images/car-models/skoda-karoq(2022).jpg' },
+
+  { name: 'Kamiq (2019-)', slug: 'kamiq-2019', img: '/images/car-models/skoda-kamiq(2019).jpg' },
+
+  // Elektrikli
+  { name: 'Enyaq iV (2020-)', slug: 'enyaq-2020', img: '/images/car-models/skoda-enyaq(2020).jpg' },
+  { name: 'Elroq (2025-)',    slug: 'elroq-2025', img: '/images/car-models/skoda-elroq(2025).webp' }
+],
+
+cupra: [
+  // Ateca
+  { name: 'Ateca (2018-2020)', slug: 'ateca-2018', img: '/images/car-models/cupra-ateca(2018).jpg' },
+  { name: 'Ateca (2020-)', slug: 'ateca-2020', img: '/images/car-models/cupra-ateca(2020).jpg' },
+
+  // Formentor
+  { name: 'Formentor (2020-2023)', slug: 'formentor-2020', img: '/images/car-models/cupra-formentor(2020).jpg' },
+  { name: 'Formentor (2024-)', slug: 'formentor-2024', img: '/images/car-models/cupra-formentor(2024).jpg' },
+
+  // Leon
+  { name: 'Leon (2020-2023)', slug: 'leon-2020', img: '/images/car-models/cupra-leon(2020).jpg' },
+  { name: 'Leon (2024-)', slug: 'leon-2024', img: '/images/car-models/cupra-leon(2024).jpg' },
+
+  // Born (tam elektrikli)
+  { name: 'Born (2021-2023)', slug: 'born-2021', img: '/images/car-models/cupra-born(2021).jpg' },
+  { name: 'Born (2024-)', slug: 'born-2024', img: '/images/car-models/cupra-born(2024).png' },
+
+  // Tavascan
+  { name: 'Tavascan (2024-)', slug: 'tavascan-2024', img: '/images/car-models/cupra-tavascan(2024).jpg' },
+
+  // Terramar
+  { name: 'Terramar (2024-)', slug: 'terramar-2024', img: '/images/car-models/cupra-terramar(2024).jpg' },
+]
+
 };
 
 

@@ -15,7 +15,7 @@
 .pd__brand {
     font-weight: 700;
     color: #475569;
-    font-size: .9rem;
+    font-size: 0.9rem;
 }
 
 .pd__title {
@@ -26,7 +26,7 @@
 
 .pd__meta {
     color: #64748b;
-    font-size: .9rem;
+    font-size: 0.9rem;
 }
 
 .pd__stock--in {
@@ -63,7 +63,7 @@
 }
 
 .pd-gallery__thumb--active {
-    outline: 2px solid rgba(225, 29, 72, .35);
+    outline: 2px solid rgba(225, 29, 72, 0.35);
 }
 
 .pd-gallery__main {
@@ -74,15 +74,20 @@
     border-radius: 12px;
     overflow: hidden;
     background: #fff;
+    --ox: 50%;
+    --oy: 50%;
+    --zoom: 1.6;
+    /* zoom katsayısı */
 }
 
 .pd-gallery__img {
     object-fit: contain;
-    transition: transform .25s ease;
+    transition: transform 0.25s ease;
+    transform-origin: var(--ox) var(--oy);
 }
 
 .pd-gallery__main:hover .pd-gallery__img {
-    transform: scale(1.03);
+    transform: scale(var(--zoom));
 }
 
 /* Buy box */
@@ -177,10 +182,10 @@
     background: #f8fafc;
     border: 1px solid #e5e7eb;
     border-bottom: none;
-    padding: .45rem .8rem;
+    padding: 0.45rem 0.8rem;
     border-radius: 10px 10px 0 0;
     font-weight: 600;
-    font-size: .95rem;
+    font-size: 0.95rem;
 }
 
 .pd-tabs__btn--active {

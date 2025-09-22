@@ -1,23 +1,22 @@
-"use client";
+'use client';
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { addItem } from "@/store/slices/cartSlice";
+import Price from "@/components/shared/Price";
+import { normalizeProduct} from '../../util/product';
 import styles from "./product-detail.module.scss";
 
-export default function PurchaseBox({ product }) {
+export default function PurchaseBox({ product: raw }) {
+  const product = normalizeProduct(raw);
   const dispatch = useDispatch();
   const [qty, setQty] = useState(1);
-
-  const price = Number(product.price || 0);
-  const kdv = Math.round(price * 0.20 * 100) / 100;
-  const total = Math.round((price + kdv) * 100) / 100;
 
   const add = () => {
     dispatch(addItem({
       id: product.id,
       title: product.title,
-      price: total,
-      img: product.images?.[0],
+      price: product.price,   // KDV yok; sepete bırak
+      img: product.image,
       brand: product.brand,
       qty,
     }));
@@ -26,21 +25,13 @@ export default function PurchaseBox({ product }) {
   return (
     <aside className={styles["pd-buy"]}>
       <div className={styles["pd-buy__price"]}>
-        {product.oldPrice && (
-          <div className={styles["pd-buy__old"]}>
-            {product.oldPrice.toLocaleString("tr-TR")} TL
-          </div>
-        )}
-        <div className={styles["pd-buy__now"]}>
-          {total.toLocaleString("tr-TR")} TL
-        </div>
-        <div className="small text-muted">KDV dahil (~%20)</div>
+        <Price price={product.price} oldPrice={product.oldPrice} />
       </div>
 
       <div className={styles["pd-buy__qty"]}>
-        <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="btn btn-outline-secondary btn-sm">−</button>
+        <button onClick={() => setQty(q => Math.max(1, q - 1))} className="btn btn-outline-secondary btn-sm">−</button>
         <span className={styles["pd-buy__qty-num"]}>{qty}</span>
-        <button onClick={() => setQty((q) => q + 1)} className="btn btn-outline-secondary btn-sm">+</button>
+        <button onClick={() => setQty(q => q + 1)} className="btn btn-outline-secondary btn-sm">+</button>
       </div>
 
       <button
