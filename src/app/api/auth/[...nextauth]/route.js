@@ -56,15 +56,20 @@ export const authOptions = {
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user?.id) token.uid = user.id;
-      return token;
+   callbacks: {
+    async redirect({ url, baseUrl }) {
+      try {
+        const u = new URL(url, baseUrl);
+        // Login sayfasına döndürmeye çalışıyorsa -> ana sayfa
+        if (u.pathname === "/uye-giris") return baseUrl;
+        // Aynı origin'de ise izin ver, değilse ana sayfaya
+        return u.origin === baseUrl ? u.href : baseUrl;
+      } catch {
+        return baseUrl;
+      }
     },
-    async session({ session, token }) {
-      if (token?.uid) session.user.id = token.uid;
-      return session;
-    },
+    async jwt({ token, user }) { if (user?.id) token.uid = user.id; return token; },
+    async session({ session, token }) { if (token?.uid) session.user.id = token.uid; return session; },
   },
 };
 
