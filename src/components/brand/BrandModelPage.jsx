@@ -4,16 +4,13 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import ProductCard from "@/components/product/ProductCard";
-import styles from "./style.module.scss"; // BEM'li SCSS Module
+import SortSelect from "@/components/search/SortSelect";
+import PartBrandCheckboxes from "@/components/filters/PartBrandCheckboxes";
+import { derivePartBrandOptions } from "../../util/filters";
+import styles from "./style.module.scss";
 
 export default function BrandModelPage({
-  brand,
-  model,
-  models,
-  products,
-  total,
-  facets,
-  initialFilters,
+  brand, model, models, products, total, facets, initialFilters,
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -36,7 +33,11 @@ export default function BrandModelPage({
     (initialFilters?.partBrand?.toString().split(",") ?? []).filter(Boolean);
 
   const catOptions = facets?.categories ?? [];
-  const partBrandOptions = facets?.partBrands ?? [];
+
+  // ✅ part brand options: facets varsa onu kullan, yoksa products’tan türet (backend’e hazır)
+  const partBrandOptions = (facets?.partBrands?.length
+    ? facets.partBrands
+    : derivePartBrandOptions(products || []));
   const yearMinMax = facets?.years ?? [1990, new Date().getFullYear()];
 
   // label map (chip’lerde isim göstermek için)
@@ -83,16 +84,9 @@ export default function BrandModelPage({
           >
             Filtreler
           </button>
-          <select
-            defaultValue={initialFilters?.sort ?? "rec"}
-            className="form-select form-select-sm w-auto"
-            onChange={(e) => updateQuery({ sort: e.target.value, page: 1 })}
-          >
-            <option value="rec">Önerilen sıralama</option>
-            <option value="price_asc">Fiyat (Artan)</option>
-            <option value="price_desc">Fiyat (Azalan)</option>
-            <option value="new">En yeni</option>
-          </select>
+
+          {/* ✅ Sıralama: ortak SortSelect */}
+          <SortSelect order={initialFilters?.sort ?? "rec"} />
         </div>
       </div>
 
@@ -213,8 +207,7 @@ export default function BrandModelPage({
           </section>
 
           <section className={styles["brand-sidebar__section"]}>
-            <div className={styles["brand-sidebar__title"]}>Parça Markaları</div>
-            <FacetCheckboxes
+            <PartBrandCheckboxes
               values={selectedPartBrands}
               options={partBrandOptions}
               onChange={(vals) => updateQuery({ partBrand: vals, page: 1 })}

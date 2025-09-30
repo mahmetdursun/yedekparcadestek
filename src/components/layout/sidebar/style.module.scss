@@ -147,6 +147,7 @@
 }
 .group-brands__inner { padding: .5rem 0; }
 
+
 /* ===== Model mega paneli ===== */
 .brand-mega--top {
   position: absolute;
@@ -157,71 +158,96 @@
   padding: .9rem 0 1.1rem;
 }
 
+/* Ortalanmış, 7’li grid */
 .brand-mega__grid {
   margin: 0 auto;
-  max-width: 1320px;
+  max-width: 1280px; /* ortaya getirir */
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 18px;
 
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: .9rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1rem;
 
   max-height: 57vh;
   overflow: auto;
+
+  /* responsive kırılımlar */
+  @media (max-width: 1400px) { grid-template-columns: repeat(6, 1fr); }
+  @media (max-width: 1200px) { grid-template-columns: repeat(5, 1fr); }
+  @media (max-width: 992px)  { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 768px)  { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 576px)  { grid-template-columns: repeat(2, 1fr); }
 }
 
 .brand-mega__item {
   position: relative;
   display: block;
-  padding: .55rem;
+  padding: 12px 10px;
   border: 1px solid #eef1f5;
-  border-radius: 12px;
+  border-radius: 14px;
   text-decoration: none;
   color: #0f172a;
   background: #fff;
   box-shadow: 0 1px 0 rgba(16,24,40,.04);
   transition: border-color .14s ease, background .14s ease, transform .14s ease, box-shadow .14s ease;
+  text-align: center;
+  cursor: pointer;
 
   &:hover,
   &:focus-visible {
-    border-color: #e3e7ee;
+    border-color: #ff7a1a;
     background: #fcfdff;
     transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(16,24,40,.12);
+    box-shadow: 0 10px 20px rgba(255,122,26,.18);
     outline: none;
   }
 }
 
+/* seçili/aktif kart için */
+.active {
+  border-color: #ff7a1a !important;
+  box-shadow: 0 16px 28px rgba(255,122,26,.22);
+}
+
 .brand-mega__thumb {
   position: relative;
-  display: block;
+  display: grid;
+  place-items: center;
   width: 100%;
   aspect-ratio: 4/3;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #f6f8fb;
-  margin-bottom: .5rem;
+  margin-bottom: .6rem;
+  padding: 14px; /* resmi küçültür */
 
-  /* hafif üst gradient */
-  &::after{
-    content:"";
-    position:absolute; inset:0;
-    background: linear-gradient(180deg, rgba(0,0,0,.04), transparent 40%, rgba(0,0,0,.06));
-    pointer-events:none;
-  }
+  img { object-fit: contain; } /* araç görseli küçük kalsın */
+}
 
-  img { object-fit: cover; }
+.brand-mega__texts {
+  display: block;
 }
 
 .brand-mega__title {
-  font-size: .97rem;
-  font-weight: 700;
-  line-height: 1.2;
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: .2px;
+  text-transform: uppercase;
   color: #0b1220;
+  line-height: 1.15;
 }
+
+.brand-mega__meta {
+  display: block;
+  margin-top: .25rem;
+  font-size: .85rem;
+  color: #6b7280;
+}
+
 
 /* ===== Responsive ===== */
 @media (max-width: 992px) {

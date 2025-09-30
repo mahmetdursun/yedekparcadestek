@@ -1,0 +1,24 @@
+.partbrand__title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.partbrand__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.partbrand__row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.partbrand__check {
+  accent-color: #dc3545;
+}
+.partbrand__label {
+  flex: 1;
+}
+.partbrand__count {
+  color: #6c757d;
+  font-size: 0.85em;
+}/*# sourceMappingURL=style.module.css.map */

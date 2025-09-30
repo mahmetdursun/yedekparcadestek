@@ -55,7 +55,160 @@ export const MOCK_PRODUCTS = [
     rating: 4.6,
     reviewCount: 18,
   },
+
+    {
+    id: "BANDO-7PK1035",
+    slug: "bando-7pk1035-v-kayisi",
+    title: "V Kayışı",
+    brand: "BANDO",
+    images: ["/images/mock/v-belt.jpg"],
+    price: 394.69,
+    currency: "TRY",
+    stock: 12,
+    sku: "BANDO-7PK1035",
+    ean: "8200830196",
+    attributes: [
+      { label: "Uzunluk [mm]", value: "1035" },
+      { label: "Kaburga sayısı", value: "7" },
+    ],
+    description: "Kanal sayısı: 7 • Uzunluk: 1035 mm • BANDO 7PK1035",
+    rating: 4.4,
+    reviewCount: 9,
+  },
+  {
+    id: "BOSCH-1987946248",
+    slug: "bosch-1987946248-v-kayisi",
+    title: "V Kayışı",
+    brand: "BOSCH",
+    images: ["/images/mock/v-belt.jpg"],
+    price: 574.98,
+    currency: "TRY",
+    stock: 7,
+    sku: "BOSCH-1987946248",
+    ean: "8200830196",
+    attributes: [
+      { label: "Uzunluk [mm]", value: "1035" },
+      { label: "Kaburga sayısı", value: "7" },
+    ],
+    description: "Bosch 7PK1035 muadili.",
+    rating: 4.7,
+    reviewCount: 22,
+  },
+  {
+    id: "DAYCO-7PK1035",
+    slug: "dayco-7pk1035-v-kayisi",
+    title: "V Kayışı",
+    brand: "DAYCO",
+    images: ["/images/mock/v-belt.jpg"],
+    price: 609.94,
+    currency: "TRY",
+    stock: 0,
+    sku: "DAYCO-7PK1035",
+    ean: "8200830196",
+    attributes: [
+      { label: "Uzunluk [mm]", value: "1035" },
+      { label: "Kaburga sayısı", value: "7" },
+    ],
+    description: "Dayco 7PK1035.",
+    rating: 4.2,
+    reviewCount: 5,
+  },
+  {
+    id: "GATES-7PK1035",
+    slug: "gates-7pk1035-v-kayisi",
+    title: "V Kayışı",
+    brand: "GATES",
+    images: ["/images/mock/v-belt.jpg"],
+    price: 524.76,
+    currency: "TRY",
+    stock: 4,
+    sku: "GATES-7PK1035",
+    ean: "8200830196",
+    attributes: [
+      { label: "Uzunluk [mm]", value: "1035" },
+      { label: "Kaburga sayısı", value: "7" },
+    ],
+    description: "Gates 7PK1035.",
+    rating: 4.5,
+    reviewCount: 11,
+  },
+  {
+    id: "BANDO-4PK1540",
+    slug: "bando-4pk1540-v-kayisi",
+    title: "V Kayışı",
+    brand: "BANDO",
+    images: ["/images/mock/v-belt.jpg"],
+    price: 390.30,
+    currency: "TRY",
+    stock: 3,
+    sku: "BANDO-4PK1540",
+    ean: "8200830196",
+    attributes: [
+      { label: "Uzunluk [mm]", value: "1540" },
+      { label: "Kaburga sayısı", value: "4" },
+    ],
+    description: "4PK1540 klima kayışı.",
+    rating: 4.1,
+    reviewCount: 4,
+  },
+  {
+    id: "BOSCH-4PK925",
+    slug: "bosch-4pk925-v-kayisi",
+    title: "V Kayışı",
+    brand: "BOSCH",
+    images: ["/images/mock/v-belt.jpg"],
+    price: 234.48,
+    currency: "TRY",
+    stock: 18,
+    sku: "BOSCH-1987948350",
+    ean: "8200830196",
+    attributes: [
+      { label: "Uzunluk [mm]", value: "925" },
+      { label: "Kaburga sayısı", value: "4" },
+    ],
+    description: "BOSCH 4PK925 klima kayışı.",
+    rating: 4.3,
+    reviewCount: 8,
+  },
+
 ];
+
+// --- Arama yardımcıları (mevcuda ek) ---
+const _normalize = (s) =>
+  String(s || "")
+    .toLowerCase()
+    .replaceAll("ü", "u")
+    .replaceAll("ö", "o")
+    .replaceAll("ş", "s")
+    .replaceAll("ı", "i")
+    .replaceAll("ğ", "g")
+    .replaceAll("ç", "c")
+    .trim();
+
+/** mock arama – MOCK_PRODUCTS içinde gezer. */
+export function searchProducts(query) {
+  const q = _normalize(query);
+  if (!q) return [];
+  const tokens = q.split(/\s+/).filter(Boolean);
+
+  const haystack = (p) =>
+    _normalize(
+      [
+        p.title,
+        p.brand,
+        p.sku,
+        p.ean,
+        p.slug,
+        p.description,
+        ...(p.categories || []).map((c) => c.label),
+        ...(p.attributes || []).map((a) => `${a.label} ${a.value}`),
+      ].join(" ")
+    );
+
+  return MOCK_PRODUCTS.filter((p) =>
+    tokens.every((t) => haystack(p).includes(t))
+  );
+}
 
 // Slug'a göre ürün bul (URL’den gelen slug’ı decode + normalize et)
 export function getProductBySlug(slug) {

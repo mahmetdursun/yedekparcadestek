@@ -1,0 +1,8 @@
+.partbrand {
+  &__title { font-weight: 600; margin-bottom: .5rem; }
+  &__list { display: flex; flex-direction: column; gap: .25rem; }
+  &__row { display: flex; align-items: center; gap: .5rem; }
+  &__check { accent-color: #dc3545; }
+  &__label { flex: 1; }
+  &__count { color: #6c757d; font-size: .85em; }
+}

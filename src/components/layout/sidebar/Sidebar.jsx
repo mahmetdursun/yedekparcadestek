@@ -71,7 +71,7 @@ export default function Sidebar({ className = "" }) {
     };
   }, [pathname]);
 
-  const models = hoverBrand ? (MODELS[hoverBrand.key] || []) : [];
+  const models = hoverBrand ? MODELS[hoverBrand.key] || [] : [];
 
   return (
     <div
@@ -116,7 +116,8 @@ export default function Sidebar({ className = "" }) {
                 ?.items.map((b) => {
                   const slug = toSlug(b.slug || b.name);
                   const hoverRaw = b.slug || b.name;
-                  const isOpen = hoverBrand && hoverBrand.key === brandKey(hoverRaw);
+                  const isOpen =
+                    hoverBrand && hoverBrand.key === brandKey(hoverRaw);
                   return (
                     <Link
                       key={`${b.slug}-${b.name}`}
@@ -130,7 +131,10 @@ export default function Sidebar({ className = "" }) {
                         // tıkla → ilk tık model panelini açar, ikinci tık linke gider
                         if (!isOpen) {
                           e.preventDefault();
-                          setHoverBrand({ key: brandKey(hoverRaw), slug: toSlug(hoverRaw) });
+                          setHoverBrand({
+                            key: brandKey(hoverRaw),
+                            slug: toSlug(hoverRaw),
+                          });
                           return;
                         }
                         // linke giderken barı kapat
@@ -138,13 +142,20 @@ export default function Sidebar({ className = "" }) {
                       }}
                     >
                       {b.logo ? (
-                        <Image src={b.logo} alt={b.name} width={56} height={56} />
+                        <Image
+                          src={b.logo}
+                          alt={b.name}
+                          width={56}
+                          height={56}
+                        />
                       ) : (
                         <span className={styles["brand-pill__fallback"]}>
                           {b.name?.[0]}
                         </span>
                       )}
-                      <span className={styles["brand-pill__name"]}>{b.name}</span>
+                      <span className={styles["brand-pill__name"]}>
+                        {b.name}
+                      </span>
                     </Link>
                   );
                 })}
@@ -163,24 +174,36 @@ export default function Sidebar({ className = "" }) {
           }}
           onMouseLeave={closeSoon}
         >
-          <div className={`${styles["brand-mega__grid"]} container-fluid`}>
+          <div className={styles["brand-mega__grid"]}>
             {models.map((m) => (
               <Link
                 key={m.slug}
                 href={`/marka/${hoverBrand.slug}/${m.slug}`}
                 className={styles["brand-mega__item"]}
                 onClick={() => {
-                  // model tıklanınca normalce git
                   setHoverBrand(null);
                   setHoverGroup(null);
                 }}
               >
                 {m.img && (
                   <span className={styles["brand-mega__thumb"]}>
-                    <Image src={m.img} alt={m.name} fill sizes="160px" />
+                    <Image
+                      src={m.img}
+                      alt={m.name}
+                      fill
+                      sizes="(min-width:1400px) 140px, (min-width:992px) 12vw, 33vw"
+                      priority={false}
+                    />
                   </span>
                 )}
-                <span className={styles["brand-mega__title"]}>{m.name}</span>
+                <span className={styles["brand-mega__texts"]}>
+                  <span className={styles["brand-mega__title"]}>{m.name}</span>
+                  {m.since && (
+                    <span className={styles["brand-mega__meta"]}>
+                      {m.since}'den itibaren
+                    </span>
+                  )}
+                </span>
               </Link>
             ))}
           </div>

@@ -1,4 +1,3 @@
-// src/components/layout/navbar/Navbar.jsx
 'use client';
 
 import Link from 'next/link';
@@ -7,13 +6,14 @@ import { useSession, signOut } from 'next-auth/react';
 import { useSelector } from 'react-redux';
 import { selectCount } from '@/store/slices/cartSlice';
 import CartDrawer from '@/components/cart/CartDrawer';
-
+import SearchModal from '@/components/search/SearchModal';
 import { FiShoppingCart, FiTruck, FiUser, FiLogOut } from 'react-icons/fi';
 
 export default function Navbar({ onToggleSidebar }) {
-  const { data: session, status } = useSession();
+ const { data: session, status } = useSession();
   const cartCount = useSelector(selectCount);
   const [openCart, setOpenCart] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
 
   return (
     <>
@@ -26,28 +26,26 @@ export default function Navbar({ onToggleSidebar }) {
           </div>
 
           {/* Arama */}
-          <form className="d-flex flex-grow-1 mx-3" onSubmit={(e)=>e.preventDefault()}>
-            <input className="form-control" placeholder="OEM / SKU / parça ara..." />
+            <form className="d-flex flex-grow-1 mx-3" onSubmit={(e)=>{e.preventDefault(); setOpenSearch(true);}}>
+            <input
+              className="form-control"
+              placeholder="OEM / SKU / parça ara..."
+              readOnly
+              onClick={() => setOpenSearch(true)}
+              onFocus={() => setOpenSearch(true)}
+            />
           </form>
 
           {/* Sağ Menü */}
           <div className="d-flex align-items-center gap-4">
-            {/* Kargo Takibi */}
-            <Link
-              href="/kargo-takibi"
-              className="d-flex flex-column align-items-center text-dark text-decoration-none"
-            >
+            <Link href="/kargo-takibi" className="d-flex flex-column align-items-center text-dark text-decoration-none">
               <FiTruck size={22} />
               <small>Kargo Takibi</small>
             </Link>
 
-            {/* Üye / Profil */}
             {status === 'authenticated' ? (
               <>
-                <Link
-                  href="/profil/hesaplar"
-                  className="d-flex flex-column align-items-center text-dark text-decoration-none"
-                >
+                <Link href="/profil/hesaplar" className="d-flex flex-column align-items-center text-dark text-decoration-none">
                   <FiUser size={22} />
                   <small>{session.user?.name || 'Profil'}</small>
                 </Link>
@@ -60,16 +58,12 @@ export default function Navbar({ onToggleSidebar }) {
                 </button>
               </>
             ) : (
-              <Link
-                href="/uye-giris"
-                className="d-flex flex-column align-items-center text-dark text-decoration-none"
-              >
+              <Link href="/uye-giris" className="d-flex flex-column align-items-center text-dark text-decoration-none">
                 <FiUser size={22} />
                 <small>Üye Girişi</small>
               </Link>
             )}
 
-            {/* Sepet (drawer) */}
             <button
               type="button"
               className="d-flex flex-column align-items-center text-dark text-decoration-none position-relative btn p-0 border-0 bg-transparent"
@@ -78,10 +72,7 @@ export default function Navbar({ onToggleSidebar }) {
               <span className="position-relative">
                 <FiShoppingCart size={22} />
                 {cartCount > 0 && (
-                  <span
-                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                    style={{ fontSize: '0.7rem' }}
-                  >
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: '0.7rem' }}>
                     {cartCount}
                   </span>
                 )}
@@ -91,6 +82,12 @@ export default function Navbar({ onToggleSidebar }) {
           </div>
         </div>
       </div>
+
+      {/* Mini arama penceresi */}
+      <SearchModal
+  open={openSearch}
+  onClose={() => setOpenSearch(false)}
+/>
 
       <CartDrawer open={openCart} onClose={() => setOpenCart(false)} />
     </>
