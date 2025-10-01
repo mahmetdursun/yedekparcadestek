@@ -3,20 +3,27 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
-import ProductCard from "@/components/product/ProductCard";
 import SortSelect from "@/components/search/SortSelect";
 import PartBrandCheckboxes from "@/components/filters/PartBrandCheckboxes";
-import { derivePartBrandOptions } from "../../util/filters";
+import ProductListRowCart from "@/components/product/ProductListRowCart";
+import { derivePartBrandOptions } from "@/util/filters";
+import { filterProductsByFitment } from "@/util/fitment";
 import styles from "./style.module.scss";
 
 export default function BrandModelPage({
-  brand, model, models, products, total, facets, initialFilters,
+  brand,
+  model,
+  models,
+  products,
+  total,
+  facets,
+  initialFilters,
 }) {
   const pathname = usePathname();
   const router = useRouter();
   const sp = useSearchParams();
 
-  const [showFilters, setShowFilters] = useState(false); // xs/sm için aç-kapa
+  const [showFilters, setShowFilters] = useState(false);
 
   const updateQuery = (patch) => {
     const q = new URLSearchParams(sp.toString());
@@ -32,24 +39,39 @@ export default function BrandModelPage({
   const selectedPartBrands =
     (initialFilters?.partBrand?.toString().split(",") ?? []).filter(Boolean);
 
+  // ✅ Ürünleri rota (brand/model) ile fitment üzerinden filtrele
+  const fitmentFiltered = useMemo(() => {
+    return filterProductsByFitment(products || [], { brand, model });
+  }, [products, brand, model]);
+
+  // ✅ Facetler (artık data temiz, ekstra filtre gerekmiyor)
+  const yearMinMax = facets?.years ?? [1990, new Date().getFullYear()];
   const catOptions = facets?.categories ?? [];
 
-  // ✅ part brand options: facets varsa onu kullan, yoksa products’tan türet (backend’e hazır)
-  const partBrandOptions = (facets?.partBrands?.length
-    ? facets.partBrands
-    : derivePartBrandOptions(products || []));
-  const yearMinMax = facets?.years ?? [1990, new Date().getFullYear()];
+  // ✅ Parça markası seçenekleri: facet varsa onu kullan; yoksa tüm products’tan türet
+  const basePartBrands = useMemo(() => {
+    if (facets?.partBrands?.length) return facets.partBrands;
+    return derivePartBrandOptions(products || []);
+  }, [facets?.partBrands, products]);
 
-  // label map (chip’lerde isim göstermek için)
+  // ✅ Seçili olup base'te olmayanları count:0 ile ekle (checkbox seçili kaybolmasın)
+  const partBrandOptions = useMemo(() => {
+    const extras = selectedPartBrands
+      .filter((b) => !basePartBrands.some((o) => o.value === b))
+      .map((b) => ({ value: b, label: b, count: 0 }));
+    return [...basePartBrands, ...extras];
+  }, [basePartBrands, selectedPartBrands]);
+
+  // Chip label map’leri
   const catLabel = useMemo(() => {
     const m = new Map();
-    catOptions.forEach((o) => m.set(o.value, o.label));
+    (catOptions || []).forEach((o) => m.set(o.value, o.label));
     return m;
   }, [catOptions]);
 
   const brandLabel = useMemo(() => {
     const m = new Map();
-    partBrandOptions.forEach((o) => m.set(o.value, o.label));
+    (partBrandOptions || []).forEach((o) => m.set(o.value, o.label));
     return m;
   }, [partBrandOptions]);
 
@@ -74,7 +96,7 @@ export default function BrandModelPage({
 
       {/* üst toolbar */}
       <div className="d-flex align-items-center justify-content-between gap-2 mb-2">
-        <strong>Toplam {Number(total || 0).toLocaleString("tr-TR")} ürün</strong>
+        <strong>Toplam {Number(total || fitmentFiltered.length || 0).toLocaleString("tr-TR")} ürün</strong>
 
         <div className="d-flex align-items-center gap-2">
           <button
@@ -84,8 +106,6 @@ export default function BrandModelPage({
           >
             Filtreler
           </button>
-
-          {/* ✅ Sıralama: ortak SortSelect */}
           <SortSelect order={initialFilters?.sort ?? "rec"} />
         </div>
       </div>
@@ -97,9 +117,7 @@ export default function BrandModelPage({
             <button
               key={`c-${v}`}
               className={styles["filter-chips__chip"]}
-              onClick={() =>
-                updateQuery({ cat: selectedCats.filter((x) => x !== v), page: 1 })
-              }
+              onClick={() => updateQuery({ cat: selectedCats.filter((x) => x !== v), page: 1 })}
               title="Kaldır"
             >
               {catLabel.get(v) || v} <span className={styles["filter-chips__x"]}>×</span>
@@ -109,12 +127,7 @@ export default function BrandModelPage({
             <button
               key={`pb-${v}`}
               className={styles["filter-chips__chip"]}
-              onClick={() =>
-                updateQuery({
-                  partBrand: selectedPartBrands.filter((x) => x !== v),
-                  page: 1,
-                })
-              }
+              onClick={() => updateQuery({ partBrand: selectedPartBrands.filter((x) => x !== v), page: 1 })}
               title="Kaldır"
             >
               {brandLabel.get(v) || v} <span className={styles["filter-chips__x"]}>×</span>
@@ -126,8 +139,7 @@ export default function BrandModelPage({
               onClick={() => updateQuery({ year: null, page: 1 })}
               title="Kaldır"
             >
-              Yıl: {initialFilters.year}{" "}
-              <span className={styles["filter-chips__x"]}>×</span>
+              Yıl: {initialFilters.year} <span className={styles["filter-chips__x"]}>×</span>
             </button>
           )}
           {initialFilters?.stock === "1" && (
@@ -139,7 +151,6 @@ export default function BrandModelPage({
               Stokta <span className={styles["filter-chips__x"]}>×</span>
             </button>
           )}
-
           <button
             className={styles["filter-chips__clear"]}
             onClick={clearAll}
@@ -158,7 +169,6 @@ export default function BrandModelPage({
             showFilters ? styles["brand-sidebar--open"] : "",
           ].join(" ")}
         >
-          {/* mobil kapat */}
           <button
             className={styles["brand-sidebar__close"]}
             onClick={() => setShowFilters(false)}
@@ -167,7 +177,7 @@ export default function BrandModelPage({
             ×
           </button>
 
-          {/* sadece marka sayfasında (model yokken) göster */}
+          {/* Marka sayfasında model listesi */}
           {!model && models?.length > 0 && (
             <section className={styles["brand-sidebar__section"]}>
               <div className={styles["brand-sidebar__title"]}>Araç Modelleri</div>
@@ -188,7 +198,7 @@ export default function BrandModelPage({
             </section>
           )}
 
-          {/* model sayfasında geri link */}
+          {/* Model sayfasında geri link */}
           {model && (
             <div className="mb-2">
               <Link href={`/marka/${brand}`} className="small">
@@ -199,19 +209,27 @@ export default function BrandModelPage({
 
           <section className={styles["brand-sidebar__section"]}>
             <div className={styles["brand-sidebar__title"]}>Kategoriler</div>
-            <FacetCheckboxes
-              values={selectedCats}
-              options={catOptions}
-              onChange={(vals) => updateQuery({ cat: vals, page: 1 })}
-            />
+            {catOptions?.length ? (
+              <FacetCheckboxes
+                values={selectedCats}
+                options={catOptions}
+                onChange={(vals) => updateQuery({ cat: vals, page: 1 })}
+              />
+            ) : (
+              <div className="text-muted small">Bu araç için kategori bulunamadı.</div>
+            )}
           </section>
 
           <section className={styles["brand-sidebar__section"]}>
-            <PartBrandCheckboxes
-              values={selectedPartBrands}
-              options={partBrandOptions}
-              onChange={(vals) => updateQuery({ partBrand: vals, page: 1 })}
-            />
+            {partBrandOptions?.length ? (
+              <PartBrandCheckboxes
+                values={selectedPartBrands}
+                options={partBrandOptions}
+                onChange={(vals) => updateQuery({ partBrand: vals, page: 1 })}
+              />
+            ) : (
+              <div className="text-muted small">Bu araç için parça markası bulunamadı.</div>
+            )}
           </section>
 
           <section className={styles["brand-sidebar__section"]}>
@@ -225,25 +243,21 @@ export default function BrandModelPage({
               <input
                 type="checkbox"
                 defaultChecked={initialFilters?.stock === "1"}
-                onChange={(e) =>
-                  updateQuery({ stock: e.target.checked ? "1" : null, page: 1 })
-                }
+                onChange={(e) => updateQuery({ stock: e.target.checked ? "1" : null, page: 1 })}
               />
               Stoktaki ürünler
             </label>
           </section>
         </aside>
 
-        {/* SAĞ: ürün grid */}
+        {/* SAĞ: ürün listesi (satır kart) */}
         <main className="flex-fill">
-          {!products || products.length === 0 ? (
+          {!fitmentFiltered || fitmentFiltered.length === 0 ? (
             <div className={styles["empty"]}>Bu filtrelerde ürün bulunamadı.</div>
           ) : (
-            <div className="row g-3">
-              {products.map((p) => (
-                <div key={p.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <ProductCard product={p} />
-                </div>
+            <div className="d-flex flex-column">
+              {fitmentFiltered.map((p) => (
+                <ProductListRowCart key={p.id || p.slug} product={p} />
               ))}
             </div>
           )}
@@ -254,7 +268,6 @@ export default function BrandModelPage({
 }
 
 /* — küçük yardımcılar — */
-
 function FacetCheckboxes({ values, options, onChange }) {
   const toggle = (v, checked) => {
     const set = new Set(values);
@@ -280,9 +293,7 @@ function FacetCheckboxes({ values, options, onChange }) {
 }
 
 function YearRange({ minMax, value, onChange }) {
-  const [min, max] = Array.isArray(minMax)
-    ? minMax
-    : [1990, new Date().getFullYear()];
+  const [min, max] = Array.isArray(minMax) ? minMax : [1990, new Date().getFullYear()];
   const [a, b] = (value || "").split("-").map((n) => Number(n) || "");
   return (
     <div className={styles["year"]}>

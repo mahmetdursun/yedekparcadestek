@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useState, useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { addItem } from "../../store/slices/cartSlice";
-import Price from "../../components/shared/Price";
+import { addItem } from "@/store/slices/cartSlice";
+import Price from "@/components/shared/Price";
 
 export default function ProductListRowCart({ product }) {
   const p = product || {};
@@ -19,8 +19,8 @@ export default function ProductListRowCart({ product }) {
     catch { return `${n} ${p.currency || "TRY"}`; }
   }, [p.price, p.currency]);
 
-  const dec = () => setQty(q => Math.max(1, q - 1));
-  const inc = () => setQty(q => Math.min(999, q + 1));
+  const dec = () => setQty((q) => Math.max(1, q - 1));
+  const inc = () => setQty((q) => Math.min(999, q + 1));
   const onQty = (e) => {
     const v = e.target.value.replace(/[^\d]/g, "");
     setQty(Math.max(1, Math.min(999, Number(v || 1))));
@@ -40,11 +40,9 @@ export default function ProductListRowCart({ product }) {
 
   return (
     <div className="card p-3 mb-3 position-relative">
-      {/* tüm satırı tıklatılabilir yapıyoruz ama butonlar çalışsın diye z-index için sadece arka plana */}
       <Link href={`/parca/${p.slug}`} className="stretched-link" aria-label={`${p.title} detay`}></Link>
 
       <div className="d-flex gap-3 align-items-start">
-        {/* Sol: görsel */}
         <div
           style={{ width: 160, height: 120 }}
           className="bg-light rounded d-flex align-items-center justify-content-center overflow-hidden"
@@ -56,10 +54,8 @@ export default function ProductListRowCart({ product }) {
           />
         </div>
 
-        {/* Orta: başlık ve özellikler */}
         <div className="flex-grow-1">
           <h2 className="h6 mb-1">{p.title}</h2>
-          {p.subtitle && <div className="text-muted small">{p.subtitle}</div>}
 
           <div className="text-muted small mt-1">
             Ürün numarası: <strong>{p.sku}</strong>
@@ -74,13 +70,9 @@ export default function ProductListRowCart({ product }) {
               ))}
             </div>
           ) : null}
-
-          {/* Daha Fazla Göster linki istersen buraya eklenir */}
         </div>
 
-        {/* Sağ: fiyat, stok, qty, sepete ekle */}
         <div style={{ width: 240 }} className="text-end">
-          {/* Price bileşenin varsa onu kullan; yoksa fallback metni bırak */}
           {Price ? (
             <div className="fw-bold fs-5"><Price price={p.price} oldPrice={p.oldPrice} /></div>
           ) : (
@@ -117,7 +109,6 @@ export default function ProductListRowCart({ product }) {
             </button>
           </div>
 
-          {/* Ürün Detayları linki */}
           <div className="small mt-2 position-relative" style={{ zIndex: 2 }}>
             <Link href={`/parca/${p.slug}`} className="text-decoration-none">Ürün Detayları</Link>
           </div>

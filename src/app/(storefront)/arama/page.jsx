@@ -9,7 +9,11 @@ import PartBrandFilterClient from "../../../components/filters/PartBrandFilterCl
 export const dynamic = "force-dynamic";
 
 const decodeParam = (v) => {
-  try { return decodeURIComponent(String(v ?? "")); } catch { return String(v ?? ""); }
+  try {
+    return decodeURIComponent(String(v ?? ""));
+  } catch {
+    return String(v ?? "");
+  }
 };
 
 export default async function SearchPage({ searchParams }) {
@@ -44,15 +48,26 @@ export default async function SearchPage({ searchParams }) {
   const sorted = [...filtered];
   if (order === "price-asc") sorted.sort((a, b) => a.price - b.price);
   else if (order === "price-desc") sorted.sort((a, b) => b.price - a.price);
-  else if (order === "name-asc") sorted.sort((a, b) => a.title.localeCompare(b.title));
+  else if (order === "name-asc")
+    sorted.sort((a, b) => a.title.localeCompare(b.title));
 
   // 4) Checkbox için seçenekler (filtered varsa ondan, yoksa results’tan türet)
-  const brandOptions = derivePartBrandOptions(filtered.length ? filtered : results);
+  // Her zaman tüm arama sonuçlarından üret
+  const baseOptions = derivePartBrandOptions(results);
+
+  // URL’den gelen seçili markalar options'ta yoksa da kaybolmasın (count=0 ile ekle)
+  const extraSelected = selectedPartBrands
+    .filter((b) => !baseOptions.some((o) => o.value === b))
+    .map((b) => ({ value: b, label: b, count: 0 }));
+
+  const brandOptions = [...baseOptions, ...extraSelected];
 
   return (
     <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1 className="h5 mb-0">“{q}” için {sorted.length} sonuç</h1>
+        <h1 className="h5 mb-0">
+          “{q}” için {sorted.length} sonuç
+        </h1>
         {/* brand prop’unu artık vermiyoruz; sırf sıralama */}
         <SortSelect q={q} order={order} />
       </div>
@@ -69,7 +84,9 @@ export default async function SearchPage({ searchParams }) {
           {sorted.map((p) => (
             <ProductListRowCart key={p.slug} product={p} />
           ))}
-          {sorted.length === 0 && <div className="text-muted">Hiç sonuç bulunamadı.</div>}
+          {sorted.length === 0 && (
+            <div className="text-muted">Hiç sonuç bulunamadı.</div>
+          )}
         </div>
       </div>
     </div>
