@@ -16,23 +16,21 @@ import { usePathname } from "next/navigation";
 import styles from "./style.module.scss";
 
 export default function Sidebar({ className = "" }) {
-  const [hoverGroup, setHoverGroup] = useState(null); // "vw" | "fiat" | ...
-  const [hoverBrand, setHoverBrand] = useState(null); // { key, slug } | null
-
-  // gecikme/kapama zamanlayıcıları
+  const [hoverGroup, setHoverGroup] = useState(null);          // "vw" | "fiat" | ...
+  const [hoverBrand, setHoverBrand] = useState(null);          // { key, slug } | null
   const groupTimer = useRef(null);
   const brandTimer = useRef(null);
   const hideTimer = useRef(null);
 
   const pathname = usePathname();
 
-  // Arama yok → doğrudan BRANDS
+  // grupları hazırla
   const groups = useMemo(
     () => makeSidebarGroups(BRANDS, BRAND_GROUPS, GROUPS_ORDER),
     []
   );
 
-  // === Hover gecikmeleri (1sn) ===
+  // === Hover gecikmeleri (150ms) ===
   const startGroupHover = (key) => {
     clearTimeout(groupTimer.current);
     groupTimer.current = setTimeout(() => {
@@ -40,26 +38,29 @@ export default function Sidebar({ className = "" }) {
       setHoverBrand(null);
     }, 150);
   };
+
   const startBrandHover = (raw) => {
     clearTimeout(brandTimer.current);
     brandTimer.current = setTimeout(() => {
       setHoverBrand({ key: brandKey(raw), slug: toSlug(raw) });
     }, 150);
   };
-  const abortHoverTimers = () => {
-    clearTimeout(groupTimer.current);
-    clearTimeout(brandTimer.current);
-  };
+
   const closeSoon = () => {
     abortHoverTimers();
     clearTimeout(hideTimer.current);
     hideTimer.current = setTimeout(() => {
       setHoverBrand(null);
       setHoverGroup(null);
-    }, 140);
+    }, 350);
   };
 
-  // sayfa değişince paneli kapat
+  const abortHoverTimers = () => {
+    clearTimeout(groupTimer.current);
+    clearTimeout(brandTimer.current);
+  };
+
+  // sayfa değişince her şeyi kapat
   useEffect(() => {
     abortHoverTimers();
     clearTimeout(hideTimer.current);
@@ -71,13 +72,10 @@ export default function Sidebar({ className = "" }) {
     };
   }, [pathname]);
 
-  const models = hoverBrand ? MODELS[hoverBrand.key] || [] : [];
+  const models = hoverBrand ? (MODELS[hoverBrand.key] || []) : [];
 
   return (
-    <div
-      className={`${styles["brand-top"]} ${className}`}
-      style={{ ["--brand-top-offset"]: "140px" }} // JSX'te tip yok
-    >
+    <div className={`${styles["brand-top"]} ${className}`}>
       <div className={`${styles["brand-top__inner"]} container-fluid`}>
         {/* Grup şeridi (VW, FIAT, FORD, …) */}
         <div className={styles["group-rail"]} onMouseLeave={closeSoon}>
@@ -88,10 +86,9 @@ export default function Sidebar({ className = "" }) {
               data-group-id={g.id}
               className={styles["group-pill"]}
               data-active={hoverGroup === g.key ? "1" : undefined}
-              onMouseEnter={() => startGroupHover(g.key)} // hover → 1sn sonra aç
+              onMouseEnter={() => startGroupHover(g.key)}
               onMouseLeave={abortHoverTimers}
               onClick={() => {
-                // tıkla → anında aç/kapa
                 setHoverBrand(null);
                 setHoverGroup((prev) => (prev === g.key ? null : g.key));
               }}
@@ -102,22 +99,23 @@ export default function Sidebar({ className = "" }) {
         </div>
       </div>
 
-      {/* Seçili grubun markaları (logo + metin kartları) */}
+      {/* Seçili grubun MARKALARI + ALTINDA MODEL PANELİ */}
       {hoverGroup && (
         <div
           className={styles["group-brands"]}
           onMouseEnter={() => clearTimeout(hideTimer.current)}
           onMouseLeave={closeSoon}
         >
-          <div className="container ps-3 ps-md-4">
-            <div className={styles["brand-rail"]}>
-              {groups
-                .find((g) => g.key === hoverGroup)
-                ?.items.map((b) => {
+          {/* ▼▼▼ YENİ: markalar için popover kartı ▼▼▼ */}
+          <div className={styles["brands-popover"]}>
+            <div className="container ps-3 ps-md-4">
+              <div className={styles["brand-rail"]}>
+                {groups.find((g) => g.key === hoverGroup)?.items.map((b) => {
                   const slug = toSlug(b.slug || b.name);
                   const hoverRaw = b.slug || b.name;
                   const isOpen =
                     hoverBrand && hoverBrand.key === brandKey(hoverRaw);
+
                   return (
                     <Link
                       key={`${b.slug}-${b.name}`}
@@ -125,10 +123,10 @@ export default function Sidebar({ className = "" }) {
                       className={styles["brand-pill"]}
                       title={b.name}
                       data-active={isOpen ? "1" : undefined}
-                      onMouseEnter={() => startBrandHover(hoverRaw)} // hover → 1sn sonra model panel
+                      onMouseEnter={() => startBrandHover(hoverRaw)}
                       onMouseLeave={abortHoverTimers}
                       onClick={(e) => {
-                        // tıkla → ilk tık model panelini açar, ikinci tık linke gider
+                        // ilk tık → model paneli aç; açıkken ikinci tık → linke git
                         if (!isOpen) {
                           e.preventDefault();
                           setHoverBrand({
@@ -137,76 +135,62 @@ export default function Sidebar({ className = "" }) {
                           });
                           return;
                         }
-                        // linke giderken barı kapat
                         setHoverGroup(null);
                       }}
                     >
                       {b.logo ? (
-                        <Image
-                          src={b.logo}
-                          alt={b.name}
-                          width={56}
-                          height={56}
-                        />
+                        <Image src={b.logo} alt={b.name} width={56} height={56} />
                       ) : (
                         <span className={styles["brand-pill__fallback"]}>
                           {b.name?.[0]}
                         </span>
                       )}
-                      <span className={styles["brand-pill__name"]}>
-                        {b.name}
-                      </span>
+                      <span className={styles["brand-pill__name"]}>{b.name}</span>
                     </Link>
                   );
                 })}
+              </div>
             </div>
-          </div>
-        </div>
-      )}
 
-      {/* Model mega paneli */}
-      {hoverBrand && models.length > 0 && (
-        <div
-          className={styles["brand-mega--top"]}
-          onMouseEnter={() => {
-            abortHoverTimers();
-            clearTimeout(hideTimer.current);
-          }}
-          onMouseLeave={closeSoon}
-        >
-          <div className={styles["brand-mega__grid"]}>
-            {models.map((m) => (
-              <Link
-                key={m.slug}
-                href={`/marka/${hoverBrand.slug}/${m.slug}`}
-                className={styles["brand-mega__item"]}
-                onClick={() => {
-                  setHoverBrand(null);
-                  setHoverGroup(null);
+            {/* MODEL PANELİ – marka kartlarının ALTINDA ve ortada */}
+            {hoverBrand && models.length > 0 && (
+              <div
+                className={styles["brand-mega--top"]}
+                onMouseEnter={() => {
+                  abortHoverTimers();
+                  clearTimeout(hideTimer.current);
                 }}
+                onMouseLeave={closeSoon}
               >
-                {m.img && (
-                  <span className={styles["brand-mega__thumb"]}>
-                    <Image
-                      src={m.img}
-                      alt={m.name}
-                      fill
-                      sizes="(min-width:1400px) 140px, (min-width:992px) 12vw, 33vw"
-                      priority={false}
-                    />
-                  </span>
-                )}
-                <span className={styles["brand-mega__texts"]}>
-                  <span className={styles["brand-mega__title"]}>{m.name}</span>
-                  {m.since && (
-                    <span className={styles["brand-mega__meta"]}>
-                      {m.since}'den itibaren
-                    </span>
-                  )}
-                </span>
-              </Link>
-            ))}
+                <div className={styles["brand-mega__grid"]}>
+                  {models.map((m) => (
+                    <Link
+                      key={m.slug}
+                      href={`/marka/${hoverBrand.slug}/${m.slug}`}
+                      className={styles["brand-mega__item"]}
+                      onClick={() => {
+                        setHoverBrand(null);
+                        setHoverGroup(null);
+                      }}
+                    >
+                      {m.img && (
+                        <span className={styles["brand-mega__thumb"]}>
+                          <Image
+                            src={m.img}
+                            alt={m.name}
+                            fill
+                            sizes="(min-width:1400px) 120px, (min-width:992px) 12vw, 33vw"
+                          />
+                        </span>
+                      )}
+                      <span className={styles["brand-mega__title"]}>{m.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
+          {/* ▲▲▲ YENİ: markalar için popover kartı ▲▲▲ */}
         </div>
       )}
     </div>

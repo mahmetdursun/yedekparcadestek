@@ -45,8 +45,8 @@ export const MOCK_PRODUCTS = [
     ],
     fitment: [
       { brand: "Volkswagen", model: "Golf (1997-2003)", years: "1997–2003" },
-      { brand: "Skoda", model: "Octavia I", years: "1996–2010" },
-      { brand: "Seat", model: "Leon I", years: "1999–2006" },
+      { brand: "Skoda", model: "Octavia (1996-2004)", years: "1996-2004" },
+      { brand: "Seat", model: "León (1999-2005)", years: "1999-2005" },
       { brand: "Renault", model: "Symbol I (1999-2008)", years: "1999-2008" },
     ],
     description:

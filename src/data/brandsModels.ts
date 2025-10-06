@@ -349,7 +349,7 @@ export const MODELS: Record<
     {
       name: "A3 (2013-2020)",
       slug: "a3-2014",
-      img: "/images/car-models/audi-a3(2014).jpg",
+      img: "/images/car-models/audi-a3(2013).png",
     },
     {
       name: "A3 (2021-)",
@@ -449,7 +449,7 @@ export const MODELS: Record<
     {
       name: "A8 (1994-2002)",
       slug: "a8-1994",
-      img: "/images/car-models/audi-a8(1994).jpg",
+      img: "/images/car-models/audi-a8(1994).png",
     },
     {
       name: "A8 (2002-2009)",
@@ -467,10 +467,10 @@ export const MODELS: Record<
       img: "/images/car-models/audi-a8(2017).jpg",
     },
 
-    { name: "Q2", slug: "q2", img: "/images/car-models/audi-q2.jpg" },
+    { name: "Q2", slug: "q2", img: "/images/car-models/audi-q2.png" },
 
     {
-      name: "Q3 (2008-2018)",
+      name: "Q3 (2008-2013)",
       slug: "q3-2008",
       img: "/images/car-models/audi-q3(2008).jpg",
     },
@@ -483,12 +483,12 @@ export const MODELS: Record<
     {
       name: "Q5 (2008-2016)",
       slug: "q5-2008",
-      img: "/images/car-models/audi-q5(2008).jpg",
+      img: "/images/car-models/audi-q5(2008).png",
     },
     {
       name: "Q5 (2017-)",
       slug: "q5-2015",
-      img: "/images/car-models/audi-q5(2017).jpg",
+      img: "/images/car-models/audi-q5(2017).png",
     },
 
     {
@@ -689,7 +689,7 @@ export const MODELS: Record<
     {
       name: "Ibiza (1993-2002)",
       slug: "ibiza-1993",
-      img: "/images/car-models/seat-ibiza(1993).jpg",
+      img: "/images/car-models/seat-ibiza(1993).png",
     },
     {
       name: "Ibiza (2002-2008)",
@@ -973,7 +973,7 @@ export const MODELS: Record<
     {
       name: "Ateca (2020-)",
       slug: "ateca-2020",
-      img: "/images/car-models/cupra-ateca(2020).jpg",
+      img: "/images/car-models/cupra-ateca(2020).png",
     },
 
     // Formentor
@@ -985,7 +985,7 @@ export const MODELS: Record<
     {
       name: "Formentor (2024-)",
       slug: "formentor-2024",
-      img: "/images/car-models/cupra-formentor(2024).jpg",
+      img: "/images/car-models/cupra-formentor(2024).png",
     },
 
     // Leon
@@ -1059,12 +1059,12 @@ export const MODELS: Record<
     {
       name: "Tipo (1988-2000)",
       slug: "tipo-1988",
-      img: "/images/car-models/fiat-tipo(1988).png",
+      img: "/images/car-models/fiat-tipo(1989).png",
     },
     {
       name: "Egea (2015-2020)",
       slug: "egea-2015",
-      img: "/images/car-models/fiat-egea(2015).jpg",
+      img: "/images/car-models/fiat-egea(2016).jpg",
     },
     {
       name: "Egea (2020-)",
@@ -1096,7 +1096,7 @@ export const MODELS: Record<
     {
       name: "600e (2023-)",
       slug: "600e-2023",
-      img: "/images/car-models/fiat-600e(2023).png",
+      img: "/images/car-models/fiat-600e(2024).png",
     },
 
     // Bravo / Brava
@@ -1146,7 +1146,7 @@ export const MODELS: Record<
     {
       name: "Uno (1990-2002)",
       slug: "uno-1990",
-      img: "/images/car-models/fiat-uno(1990).png",
+      img: "/images/car-models/fiat-uno(1991).png",
     },
 
     // Doblo
