@@ -1,0 +1,176 @@
+@charset "UTF-8";
+.oc {
+  max-width: 960px;
+  padding: 24px 0 40px;
+}
+
+/* Header */
+.oc__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.oc__header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.oc__header-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #fee2e2;
+  display: grid;
+  place-items: center;
+  color: #b91c1c;
+  font-size: 16px;
+}
+
+.oc__header-title {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.oc__header-meta {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+.oc__header-meta strong {
+  margin-left: 4px;
+  color: #0f172a;
+}
+
+/* Card */
+.oc-card {
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 14px 16px 16px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+.oc-card__top {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.oc-card__img {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f9fafb;
+}
+
+.oc-card__info {
+  min-width: 0;
+}
+
+.oc-card__title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.oc-card__sub {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+
+.oc-card__price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.oc-card__installment {
+  font-weight: 600;
+}
+
+.oc-card__total {
+  font-weight: 800;
+}
+
+/* Refund button */
+.oc-card__refund-btn {
+  width: 100%;
+  border-radius: 8px;
+  border: 1.5px solid #111827;
+  background: #fff;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+/* Status */
+.oc-status {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.oc-status__icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #fee2e2;
+  display: grid;
+  place-items: center;
+}
+
+.oc-status__icon {
+  color: #16a34a;
+  font-size: 18px;
+}
+
+.oc-status__text {
+  font-weight: 600;
+}
+
+/* Bottom links */
+.oc__links {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.oc__link {
+  font-size: 0.9rem;
+  color: #2563eb;
+  text-decoration: none;
+}
+.oc__link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive (375px+ bizim için önemli) */
+@media (max-width: 575.98px) {
+  .oc {
+    padding: 16px 0 28px;
+  }
+  .oc-card__top {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+  .oc-card__img {
+    width: 60px;
+    height: 60px;
+  }
+  .oc__header-meta {
+    display: none;
+  }
+}/*# sourceMappingURL=style.module.css.map */

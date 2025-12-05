@@ -1,8 +1,93 @@
+/* src/components/filters/style.module.scss */
+
+/* Dış kutu */
+.filterBox {
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #e2e6ee;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.filterBox__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-bottom: 1px solid #edf0f6;
+  background: #f8fafc;
+}
+
+.filterBox__title {
+  font-weight: 600;
+  color: #111827;
+}
+
+.filterBox__chevron {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.filterBox__body {
+  padding: 8px 10px 10px;
+}
+
+.filterBox__search {
+  margin-bottom: 6px;
+}
+
+.filterBox__searchInput {
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: 3px;
+  border: 1px solid #e2e6ee;
+  font-size: 12px;
+  color: #111827;
+  outline: none;
+}
+
+.filterBox__searchInput::placeholder {
+  color: #9ca3af;
+}
+
+.filterBox__searchInput:focus {
+  border-color: #df4f4f;
+  box-shadow: 0 0 0 1px rgba(223, 79, 79, 0.15);
+}
+
+.filterBox__scroll {
+  max-height: 190px; /* screenshot'taki gibi kayar alan */
+  overflow: auto;
+}
+
+/* Checkbox listesi – marka / araç / kategori hepsi bunu paylaşacak */
 .partbrand {
-  &__title { font-weight: 600; margin-bottom: .5rem; }
-  &__list { display: flex; flex-direction: column; gap: .25rem; }
-  &__row { display: flex; align-items: center; gap: .5rem; }
-  &__check { accent-color: #dc3545; }
-  &__label { flex: 1; }
-  &__count { color: #6c757d; font-size: .85em; }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 0;
+  }
+
+  &__check {
+    accent-color: #df4f4f;
+    width: 14px;
+    height: 14px;
+  }
+
+  &__label {
+    flex: 1;
+  }
+
+  &__count {
+    color: #6b7280;
+    font-size: 11px;
+  }
 }

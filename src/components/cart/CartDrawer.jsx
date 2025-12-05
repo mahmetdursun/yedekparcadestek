@@ -1,6 +1,7 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   selectItems,
   selectSubtotal,
@@ -16,7 +17,6 @@ import cn from "classnames";
 import styles from "./style.module.scss";
 import ConfirmDialog from "@/components/ui/ConfirmDialog/ConfirmDialog";
 
-
 export default function CartDrawer({ open, onClose }) {
   const items = useSelector(selectItems);
   const subtotal = useSelector(selectSubtotal);
@@ -29,6 +29,8 @@ export default function CartDrawer({ open, onClose }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const router = useRouter();
 
   // Esc ile kapat
   useEffect(() => {
@@ -44,19 +46,17 @@ export default function CartDrawer({ open, onClose }) {
     <>
       {/* Backdrop */}
       <div
-        className={cn(
-          styles["cart-drawer__backdrop"],
-          { [styles["cart-drawer__backdrop--show"]]: open }
-        )}
+        className={cn(styles["cart-drawer__backdrop"], {
+          [styles["cart-drawer__backdrop--show"]]: open,
+        })}
         onClick={onClose}
       />
 
       {/* Drawer */}
       <aside
-        className={cn(
-          styles["cart-drawer"],
-          { [styles["cart-drawer--open"]]: open }
-        )}
+        className={cn(styles["cart-drawer"], {
+          [styles["cart-drawer--open"]]: open,
+        })}
         role="dialog"
         aria-modal="true"
         aria-label="Alışveriş Sepeti"
@@ -78,7 +78,9 @@ export default function CartDrawer({ open, onClose }) {
                   </div>
 
                   <div className={styles["cart-drawer__meta"]}>
-                    <div className={styles["cart-drawer__title"]}>{it.title}</div>
+                    <div className={styles["cart-drawer__title"]}>
+                      {it.title}
+                    </div>
                     <div className="small text-muted">{it.brand}</div>
 
                     <div className={styles["cart-drawer__qty"]}>
@@ -111,10 +113,7 @@ export default function CartDrawer({ open, onClose }) {
                       </button>
 
                       <button
-                        className={cn(
-                          "btn",
-                          styles["cart-drawer__remove-btn"]
-                        )}
+                        className={cn("btn", styles["cart-drawer__remove-btn"])}
                         onClick={() => dispatch(removeItem(it.id))}
                       >
                         Sepetten Sil
@@ -172,7 +171,6 @@ export default function CartDrawer({ open, onClose }) {
             onClose={() => setConfirmOpen(false)}
           />
 
-
           <button
             className={cn(
               "btn w-100 mt-2",
@@ -180,6 +178,7 @@ export default function CartDrawer({ open, onClose }) {
               styles["cart-drawer__foot-btn--warning"]
             )}
             disabled={empty}
+            onClick={() => !empty && router.push("/sepet")}
           >
             ALIŞVERİŞİ TAMAMLA
           </button>

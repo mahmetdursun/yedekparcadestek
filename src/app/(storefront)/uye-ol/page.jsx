@@ -135,7 +135,6 @@ export default function SignUpPage() {
           <div className="d-flex justify-content-center gap-3 pb-2">
             <button type="button" className="btn btn-light border">Facebook</button>
             <button type="button" className="btn btn-light border">Google</button>
-            <button type="button" className="btn btn-light border">Apple</button>
           </div>
         </div>
       </form>

@@ -1,131 +1,111 @@
 // === Marka Grupları ===
 // Üst strip’te gözüken ana grup sırası:
+// === Marka Grupları ===
+// brandsModels.ts
+
 export const GROUPS_ORDER = [
-  "vw",
-  "fiat",
-  "ford",
-  "hyundai",
-  "opel",
-  "renault",
-  "volvo",
-  "mercedes",
-  "bmw",
-  "toyota",
-  "kia",
-  "nissan",
-  "honda",
+  "vw","fiat","ford","hyundai","opel",
+  "renault","volvo","mercedes","bmw","toyota",
+  "kia","nissan","honda",
 ] as const;
 
 export type BrandGroupKey = (typeof GROUPS_ORDER)[number];
 
 export type BrandGroup = {
-  id: number; // ✅ sabit ID
+  id: number;
   label: string;
-  members: string[]; // toSlug’lu marka anahtarları (örn: "audi","land-rover")
+  members: string[];   // toSlug’lu marka anahtarları
+  logo?: string;       // ✅ grup logosu (opsiyonel)
 };
+
 
 export type Brand = {
   name: string;
   slug: string;
   count: string;
   logo: string;
-  // country?: CountryCode; // ileride tekrar kullanacaksan opsiyonel bırakabilirsin
 };
 
 export const BRAND_GROUPS: Record<BrandGroupKey, BrandGroup> = {
-  // 1) VW/AUDI/SEAT/SKODA/CUPRA
   vw: {
     id: 1,
     label: "VAG",
     members: ["volkswagen", "audi", "seat", "skoda", "cupra"],
+    logo: "/images/car-logo/vag.png",
   },
-
-  // 2) FIAT/LANCIA/ALFAROMEO/JEEP
-  // Not: BRANDS içinde Alfa Romeo'nun slug'ı "Alfa" -> toSlug("Alfa") === "alfa"
   fiat: {
     id: 2,
     label: "FIAT",
     members: ["fiat", "lancia", "alfa", "jeep"],
+    logo: "/images/car-logo/fiat.png",
   },
-
-  // 3) FORD
   ford: {
     id: 3,
     label: "FORD",
     members: ["ford"],
+    logo: "/images/car-logo/ford.png",
   },
-
-  // 4) HYUNDAI
   hyundai: {
     id: 4,
     label: "HYUNDAI",
     members: ["hyundai"],
+    logo: "/images/car-logo/hyundai.png",
   },
-
-  // 5) OPEL/PEUGEOT/CITROEN/DS/CHEVROLET
   opel: {
     id: 5,
     label: "PSA",
     members: ["opel", "peugeot", "citroen", "ds", "chevrolet"],
+    logo: "/images/car-logo/psa.png",
   },
-
-  // 6) RENAULT/DACIA
   renault: {
     id: 6,
     label: "RENAULT",
     members: ["renault", "dacia"],
+    logo: "/images/car-logo/renault.png",
   },
-
-  // 7) VOLVO
   volvo: {
     id: 7,
     label: "VOLVO",
     members: ["volvo"],
+    logo: "/images/car-logo/volvo.png",
   },
-
-  // 8) MERCEDES/SMART
   mercedes: {
     id: 8,
     label: "MERCEDES",
     members: ["mercedes", "smart"],
+    logo: "/images/car-logo/mercedes-benz.png",
   },
-
-  // 9) BMW/LANDROVER/RANGEROVER/MINI
-  // Not: "land rover" -> toSlug => "land-rover"; "range rover" -> "range-rover"
   bmw: {
     id: 9,
     label: "BMW",
     members: ["bmw", "land-rover", "range-rover", "mini"],
+    logo: "/images/car-logo/bmw.png",
   },
-
-  // 10) TOYOTA/LEXUS
   toyota: {
     id: 10,
     label: "TOYOTA",
     members: ["toyota", "lexus"],
+    logo: "/images/car-logo/toyota.png",
   },
-
-  // 11) KIA
   kia: {
     id: 11,
     label: "KIA",
     members: ["kia"],
+    logo: "/images/car-logo/kia.png",
   },
-
-  // 12) NISSAN/INFINITI
   nissan: {
     id: 12,
     label: "NISSAN",
     members: ["nissan", "infiniti"],
+    logo: "/images/car-logo/nissan.png",
   },
-
-  // 13) HONDA
   honda: {
     id: 13,
     label: "HONDA",
     members: ["honda"],
+    logo: "/images/car-logo/honda.png",
   },
-};
+} satisfies Record<BrandGroupKey, BrandGroup>;
 
 // === Markalar (mevcut listen aynı) ===
 export const BRANDS: Brand[] = [

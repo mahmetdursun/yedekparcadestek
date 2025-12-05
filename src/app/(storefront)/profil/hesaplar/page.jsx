@@ -6,7 +6,6 @@ import { useSession, signIn } from 'next-auth/react';
 const PROVIDERS = {
   google:  { label: 'Google',  btn: 'btn-danger' },
   facebook:{ label: 'Facebook',btn: 'btn-primary' },
-  apple:   { label: 'Apple',   btn: 'btn-dark' },
 };
 
 export default function LinkedAccountsPage() {
@@ -57,7 +56,7 @@ export default function LinkedAccountsPage() {
       <h1 className="h5 fw-bold mb-3">Bağlı Hesaplar</h1>
       {err && <div className="alert alert-danger">{err}</div>}
 
-      {['google','facebook','apple'].map((p) => {
+      {['google','facebook'].map((p) => {
         const linked = isLinked(p);
         const acc = accounts.find(a => a.provider === p);
         return (

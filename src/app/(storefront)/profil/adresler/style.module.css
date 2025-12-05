@@ -1,0 +1,358 @@
+@charset "UTF-8";
+.checkout {
+  padding: 24px 0 40px;
+}
+
+/* Üst başlık */
+.checkout__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Stepper */
+.checkout-steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkout-steps__step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.checkout-steps__step--done {
+  color: #16a34a;
+}
+
+.checkout-steps__step--active {
+  color: #111827;
+  font-weight: 600;
+}
+
+.checkout-steps__icon {
+  font-size: 1.1rem;
+}
+
+.checkout-steps__arrow {
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+/* Kutular */
+.checkout-box {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 16px 16px 12px;
+  margin-bottom: 16px;
+}
+
+.checkout-box__head {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+/* Sepetteki ürünler */
+.checkout-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkout-item {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.checkout-item__img {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.checkout-item__info {
+  min-width: 0;
+}
+
+.checkout-item__title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.checkout-item__price {
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+/* Adresler */
+.address-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.address-card {
+  text-align: left;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: 0.15s ease border-color, 0.15s ease box-shadow, 0.15s ease background-color;
+}
+
+.address-card--active {
+  border-color: #f97316;
+  box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.4);
+  background: #fff7ed;
+}
+
+.address-card__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.address-card__line {
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.address-card__meta {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.address-add-btn {
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px dashed #d1d5db;
+  background: #ffffff;
+  font-size: 0.85rem;
+  padding: 8px 10px;
+  color: #4b5563;
+  cursor: pointer;
+  transition: 0.15s ease background-color, 0.15s ease border-color;
+}
+
+.address-add-btn:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* Ödeme sekmeleri */
+.pay-tabs {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  margin-bottom: 12px;
+}
+
+.pay-tabs__btn {
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.pay-tabs__btn--active {
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Ödeme grid */
+.pay-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 992px) {
+  .pay-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+.pay-card {
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  background: #ffffff;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-bottom: 3px;
+}
+
+/* Taksit kutusu */
+.pay-installment {
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  background: #f9fafb;
+}
+
+.pay-installment__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 6px 0;
+}
+
+/* Sağ özet */
+.summary {
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 16px 14px;
+  background: #ffffff;
+}
+
+.summary__head {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.summary__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+
+.summary__row {
+  display: flex;
+  justify-content: space-between;
+  color: #4b5563;
+}
+
+.summary__total {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.summary__contract {
+  margin-top: 10px;
+  border-top: 1px dashed #e5e7eb;
+  padding-top: 8px;
+}
+
+.summary__btn {
+  margin-top: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: #f97316;
+  color: #ffffff;
+  transition: 0.15s ease background-color, 0.15s ease box-shadow;
+}
+
+.summary__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.summary__btn:not(:disabled):hover {
+  background: #ea580c;
+  box-shadow: 0 8px 20px rgba(234, 88, 12, 0.3);
+}
+
+/* Adres modalı */
+.addr-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+.addr-modal {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.35);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.addr-modal__head {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.addr-modal__body {
+  padding: 12px 16px;
+  overflow-y: auto;
+}
+
+.addr-modal__foot {
+  padding: 10px 16px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Fatura tipi butonları */
+.invoice-type {
+  display: inline-flex;
+  gap: 6px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  padding: 3px;
+}
+
+.invoice-type__btn {
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.invoice-type__btn--active {
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}/*# sourceMappingURL=style.module.css.map */

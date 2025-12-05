@@ -1,10 +1,23 @@
+@charset "UTF-8";
+.profile {
+  /* form kartının bulunduğu alanı çok genişletmeden tut */
+  max-width: 720px;
+  width: 100%;
+  /* Tablet ve altı: tek kolona düşür */
+  /* Çok dar ekran: buton altta tam genişlik, mesaj satır altında */
+}
 .profile__card {
   border-radius: 12px;
+  border: 1px solid #e5e7eb; /* diğer account-card’larla uyum */
+  overflow: hidden;
 }
 .profile__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+}
+.profile__field {
+  min-width: 0;
 }
 .profile__label {
   font-weight: 600;
@@ -22,13 +35,31 @@
 .profile__actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
 }
 .profile__msg {
   font-weight: 600;
+  /* bootstrap'in ms-3'ünü mobile’da ezebilmek için */
+  white-space: nowrap;
 }
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
   .profile__grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+@media (max-width: 575.98px) {
+  .profile__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .profile__actions .btn {
+    width: 100%;
+  }
+  .profile__msg {
+    margin-left: 0 !important; /* "ms-3" etkisini sıfırla */
+    text-align: center;
+    white-space: normal;
   }
 }/*# sourceMappingURL=style.module.css.map */

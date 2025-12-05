@@ -1,22 +1,78 @@
 @charset "UTF-8";
+/* ------------------------------------------------------------------ */
+/* Footer (BEM) – responsive ölçeklendirme + dokunmatik uygunluk      */
+/* ------------------------------------------------------------------ */
 .siteFooter {
   background: #0f172a;
   color: #eef2ff;
-  /* varsa üst şerit için */
+  padding-top: 28px; /* üst boşluk */
+  padding-bottom: 0; /* alt boşluk kaldırıldı */
+  /* Container ve Bootstrap row/gap ince ayarları */
+  /* (Varsa) üst şerit */
+}
+.siteFooter :global(.container) {
+  /* XS’te kenar boşluklarını biraz arttır */
+  padding-left: 16px;
+  padding-right: 16px;
+}
+@media (min-width: 768px) {
+  .siteFooter :global(.container) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+.siteFooter :global(.row) {
+  /* Bootstrap gutter’larını kırılımlara göre yeniden tanımla */
+  --bs-gutter-x: 1rem;
+  --bs-gutter-y: 1.25rem;
+}
+@media (min-width: 768px) {
+  .siteFooter :global(.row) {
+    --bs-gutter-x: 1.25rem;
+  }
+}
+@media (min-width: 992px) {
+  .siteFooter :global(.row) {
+    --bs-gutter-x: 1.5rem;
+  }
 }
 .siteFooter .footer-newsletter {
   background: #dc2626;
   padding: 12px 0;
 }
+@media (min-width: 768px) {
+  .siteFooter .footer-newsletter {
+    padding: 14px 0;
+  }
+}
+@media (min-width: 992px) {
+  .siteFooter .footer-newsletter {
+    padding: 16px 0;
+  }
+}
 
+/* Başlıklar */
 .footerTitle {
   margin: 0 0 8px;
-  font-size: 14px;
+  font-weight: 700;
   letter-spacing: 0.2px;
   color: #e2e8f0;
   text-transform: uppercase;
+  /* Tipografi merdiveni */
+  font-size: 13px;
+}
+@media (min-width: 768px) {
+  .footerTitle {
+    font-size: 14px;
+  }
+}
+@media (min-width: 992px) {
+  .footerTitle {
+    font-size: 15px;
+  }
 }
 
+/* Link listeleri */
 .footerLinks {
   list-style: none;
   padding: 0;
@@ -24,34 +80,136 @@
 }
 .footerLinks li a {
   display: block;
-  padding: 6px 0;
-  font-size: 14px;
-  color: #cbd5e1;
   text-decoration: none;
+  color: #cbd5e1;
+  /* Dokunmatik için hedef yüksekliği */
+  padding: 8px 0;
+  line-height: 1.35;
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  .footerLinks li a {
+    padding: 6px 0;
+    font-size: 14px;
+  }
+}
+@media (min-width: 992px) {
+  .footerLinks li a {
+    padding: 6px 0;
+    font-size: 15px;
+  }
 }
 .footerLinks li a:hover {
   color: #fff;
 }
+.footerLinks li a:focus-visible {
+  outline: 2px solid #df4f4f;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
 
+/* Sosyal ikon butonları */
 .socialBtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px; /* XS’te biraz daha büyük hedef */
   border-radius: 50%;
   color: #e2e8f0;
   border: 1px solid rgba(226, 232, 240, 0.35);
-  transition: 0.2s;
+  transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+@media (min-width: 768px) {
+  .socialBtn {
+    width: 36px;
+    height: 36px;
+  }
 }
 .socialBtn:hover {
   background: #df4f4f;
   border-color: #df4f4f;
   color: #fff;
+  transform: translateY(-1px);
+}
+.socialBtn:focus-visible {
+  outline: 2px solid #df4f4f;
+  outline-offset: 2px;
 }
 
+/* Ödeme ikonları satırı – küçük ekranda sarmala */
+:global(.d-flex.gap-3.align-items-center) {
+  flex-wrap: wrap;
+  row-gap: 6px;
+  /* Font Awesome kart ikonları boyutu */
+}
+@media (min-width: 768px) {
+  :global(.d-flex.gap-3.align-items-center) {
+    row-gap: 4px;
+  }
+}
+:global(.d-flex.gap-3.align-items-center) :global(.fa-2x) {
+  font-size: 1.7rem;
+}
+@media (min-width: 768px) {
+  :global(.d-flex.gap-3.align-items-center) :global(.fa-2x) {
+    font-size: 1.9rem;
+  }
+}
+@media (min-width: 992px) {
+  :global(.d-flex.gap-3.align-items-center) :global(.fa-2x) {
+    font-size: 2rem;
+  }
+}
+
+/* Alt şerit */
 .footerBottom {
   border-top: 1px solid rgba(226, 232, 240, 0.12);
-  padding: 12px 0;
   background: #0b1221;
+  padding: 12px 0;
+  /* Alt linklerde tipografi */
+}
+@media (min-width: 768px) {
+  .footerBottom {
+    padding: 14px 0;
+  }
+}
+@media (min-width: 992px) {
+  .footerBottom {
+    padding: 16px 0;
+  }
+}
+.footerBottom :global(.small) {
+  font-size: 12px;
+}
+@media (min-width: 768px) {
+  .footerBottom :global(.small) {
+    font-size: 12.5px;
+  }
+}
+@media (min-width: 992px) {
+  .footerBottom :global(.small) {
+    font-size: 13px;
+  }
+}
+.footerBottom :global(a) {
+  color: #cbd5e1;
+  text-decoration: none;
+}
+.footerBottom :global(a):hover {
+  color: #fff;
+}
+.footerBottom :global(a):focus-visible {
+  outline: 2px solid #df4f4f;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Reduce motion tercihine saygı */
+@media (prefers-reduced-motion: reduce) {
+  .siteFooter * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }/*# sourceMappingURL=style.module.css.map */

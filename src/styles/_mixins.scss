@@ -1,0 +1,27 @@
+@use "sass:map";
+@use "./_breakpoints" as *;
+@use "./variables" as *;
+
+// Fluid tipografi (opsiyonel, sabit istersen kullanma)
+@function fluid($min, $max, $vw-min: 360, $vw-max: 1440) {
+  @return clamp(#{$min}, calc(#{$min} + (#{ $max - $min } * (100vw - #{$vw-min}px) / (#{ $vw-max - $vw-min }))), #{$max});
+}
+
+@mixin container($key: xl, $padX: 16px) {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: $padX;
+  @include up($key) {
+    // Bootstrap benzeri genişlikler
+    max-width: if($key == sm, 540px,
+              if($key == md, 720px,
+              if($key == lg, 960px,
+              if($key == xl, 1140px, 1320px))));
+  }
+}
+
+@mixin auto-grid($minCol: 220px, $gap: 16px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($minCol, 1fr));
+  gap: $gap;
+}

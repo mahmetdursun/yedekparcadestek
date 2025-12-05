@@ -20,7 +20,7 @@
 }
 
 .pd__title {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   line-height: 1.25;
   margin: 6px 0 10px;
 }
@@ -38,11 +38,12 @@
   color: #dc2626;
 }
 
-/* Gallery */
+/* ========== GALERI (ORTAK) ========== */
 .pd-gallery {
   display: grid;
-  grid-template-columns: 84px 1fr;
+  grid-template-columns: 84px minmax(0, 1fr);
   gap: 10px;
+  align-items: stretch;
 }
 
 .pd-gallery__thumbs {
@@ -61,6 +62,7 @@
   border-radius: 10px;
   overflow: hidden;
   background: #fff;
+  flex: 0 0 auto;
 }
 
 .pd-gallery__thumb--active {
@@ -71,6 +73,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1/1;
+  max-height: 480px; /* üst sınır */
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   overflow: hidden;
@@ -78,7 +81,6 @@
   --ox: 50%;
   --oy: 50%;
   --zoom: 1.6;
-  /* zoom katsayısı */
 }
 
 .pd-gallery__img {
@@ -244,13 +246,100 @@
   text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
+/* ========== 992–1199px (normal desktop, biraz küçült) ========== */
+@media (max-width: 1199.98px) and (min-width: 992px) {
   .pd-gallery {
-    grid-template-columns: 72px 1fr;
+    grid-template-columns: 78px minmax(0, 1fr);
   }
   .pd-gallery__thumb {
-    width: 72px;
-    height: 72px;
+    width: 78px;
+    height: 78px;
+  }
+  .pd-gallery__main {
+    max-height: 420px;
+    --zoom: 1.45;
+  }
+}
+/* ========== 576–991px (tablet + küçük laptop) ========== */
+@media (max-width: 991.98px) and (min-width: 576px) {
+  .pd-gallery {
+    grid-template-columns: 64px minmax(0, 1fr);
+    max-width: 420px; /* artık full genişlik değil */
+    margin-inline: auto; /* ortala */
+    gap: 8px;
+  }
+  .pd-gallery__thumb {
+    width: 64px;
+    height: 64px;
+  }
+  .pd-gallery__main {
+    aspect-ratio: 4/3; /* daha yatay */
+    max-height: 360px;
+    --zoom: 1.35; /* zoom’u da azalt */
+  }
+}
+/* ========== 375–575px (asıl mobil) ========== */
+@media (max-width: 575.98px) {
+  .pd-gallery {
+    grid-template-columns: 1fr; /* tek kolon */
+    max-width: 100%;
+    gap: 8px;
+  }
+  .pd-gallery__main {
+    aspect-ratio: 4/3;
+    max-height: 320px;
+    --zoom: 1.25;
+  }
+  .pd-gallery__thumbs {
+    flex-direction: row;
+    justify-content: flex-start;
+    max-height: none;
+    margin-top: 4px;
+    padding-bottom: 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .pd-gallery__thumb {
+    width: 60px;
+    height: 60px;
+  }
+}
+@media (max-width: 991.98px) {
+  .pd-buy {
+    position: static !important; /* sticky kalkar */
+    max-width: 360px; /* çok yayılmasın */
+    width: 100%; /* responsive */
+    padding: 14px; /* biraz daha ferah */
+  }
+  /* Fiyat bölümünü ortala */
+  .pd-buy__price {
+    text-align: center;
+  }
+  /* Adet seçim bölümünü ortala */
+  .pd-buy__qty {
+    justify-content: center; /* flex içeriğini ortaya alır */
+  }
+  .pd__bc {
+    font-size: 0.7rem;
+  }
+  .pd__brand {
+    font-size: 0.9rem;
+  }
+  .pd__title {
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+  .pd__meta {
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 575.98px) {
+  .pd-buy {
+    max-width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+  }
+  .pd-buy__now {
+    font-size: 1.2rem;
   }
 }/*# sourceMappingURL=product-detail.module.css.map */

@@ -8,7 +8,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 // NextAuth hata kodlarını çeviri
 const ERROR_MAP = {
   OAuthAccountNotLinked:
-    "Bu e-posta başka bir giriş yöntemiyle zaten bağlı. Önce o yöntemle giriş yapın, sonra Profil → Bağlı Hesaplar'dan Google/FB/Apple'ı ekleyin.",
+    "Bu e-posta başka bir giriş yöntemiyle zaten bağlı. Önce o yöntemle giriş yapın, sonra Profil → Bağlı Hesaplar'dan Google/FB ekleyin.",
   OAuthCreateAccount:
     "Sosyal giriş sırasında hesap oluşturulamadı. Birkaç dakika sonra tekrar deneyin.",
   CredentialsSignin: "E-posta veya şifre hatalı.",
@@ -117,9 +117,6 @@ export default function LoginClient() {
           </button>
           <button type="button" className="btn btn-light border" onClick={() => signIn("google", { callbackUrl })}>
             Google
-          </button>
-          <button type="button" className="btn btn-light border" onClick={() => signIn("apple", { callbackUrl })}>
-            Apple
           </button>
         </div>
       </form>

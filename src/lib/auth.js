@@ -4,7 +4,6 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import Google from "next-auth/providers/google";
 import Facebook from "next-auth/providers/facebook";
-import Apple from "next-auth/providers/apple";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
@@ -26,10 +25,6 @@ export const authOptions = {
     Facebook({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET
-    }),
-    Apple({
-      clientId: process.env.APPLE_CLIENT_ID,
-      clientSecret: process.env.APPLE_CLIENT_SECRET
     }),
     Credentials({
       name: "Email & Password",

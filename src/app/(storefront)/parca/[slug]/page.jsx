@@ -20,8 +20,10 @@ export default async function ProductDetailPage({ params }) {
     <div className={`container ${styles["pd"]}`}>
       <Breadcrumbs product={product} />
       <div className={`row ${styles["pd__head"]}`}>
-        <div className="col-12 col-lg-5"><ProductGallery product={product} /></div>
-        <div className="col-12 col-lg-4">
+        <div className="col-12 col-md-4 col-lg-5">
+    <ProductGallery product={product} />
+  </div>
+        <div className="col-12 col-md-4 col-lg-4">
           <div className={styles["pd__summary"]}>
             <div className={styles["pd__brand"]}>{product.brand}</div>
             <h1 className={styles["pd__title"]}>{product.title}</h1>
@@ -34,7 +36,9 @@ export default async function ProductDetailPage({ params }) {
             </div>
           </div>
         </div>
-        <div className="col-12 col-lg-3"><PurchaseBox product={product} /></div>
+        <div className="col-12 col-md-4 col-lg-3">
+  <PurchaseBox product={product} />
+</div>
       </div>
       <DetailTabs
         description={product.description}

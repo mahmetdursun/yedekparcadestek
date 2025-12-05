@@ -1,11 +1,10 @@
+// src/components/filters/PartBrandCheckboxes.jsx
 "use client";
-
 import styles from "./style.module.scss";
 
 export default function PartBrandCheckboxes({
-  title = "Parça Markaları",
-  values = [],          // ['BOSCH','MAHLE',...]
-  options = [],         // [{value,label,count}]
+  values = [],
+  options = [],
   onChange = () => {},
 }) {
   const toggle = (v, checked) => {
@@ -15,24 +14,23 @@ export default function PartBrandCheckboxes({
   };
 
   return (
-    <section className={styles["partbrand"]}>
-      <div className={styles["partbrand__title"]}>{title}</div>
-      <div className={styles["partbrand__list"]}>
+    <div className={styles.partbrand}>
+      <div className={styles.partbrand__list}>
         {options.map((o) => (
-          <label key={o.value} className={styles["partbrand__row"]}>
+          <label key={o.value} className={styles.partbrand__row}>
             <input
               type="checkbox"
-              className={styles["partbrand__check"]}
+              className={styles.partbrand__check}
               defaultChecked={values.includes(o.value)}
               onChange={(e) => toggle(o.value, e.target.checked)}
             />
-            <span className={styles["partbrand__label"]}>{o.label}</span>
+            <span className={styles.partbrand__label}>{o.label}</span>
             {typeof o.count === "number" && (
-              <span className={styles["partbrand__count"]}>{o.count}</span>
+              <span className={styles.partbrand__count}>({o.count})</span>
             )}
           </label>
         ))}
       </div>
-    </section>
+    </div>
   );
 }

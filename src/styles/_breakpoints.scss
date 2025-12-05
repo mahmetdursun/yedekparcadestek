@@ -1,0 +1,23 @@
+@use "sass:map";
+
+// Mobil-önce
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+) !default;
+
+@function bp($key) {
+  @return map.get($breakpoints, $key);
+}
+
+@mixin up($key) {
+  @media (min-width: bp($key)) { @content; }
+}
+
+@mixin down($key) {
+  @media (max-width: calc(bp($key) - 0.02px)) { @content; }
+}

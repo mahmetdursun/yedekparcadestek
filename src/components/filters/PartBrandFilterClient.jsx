@@ -1,15 +1,20 @@
+// src/components/filters/PartBrandFilterClient.jsx
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import FilterBox from "./FilterBox";
 import PartBrandCheckboxes from "./PartBrandCheckboxes";
 
-export default function PartBrandFilterClient({ title = "Parça Markaları", options = [] }) {
+export default function PartBrandFilterClient({
+  title = "Marka",
+  options = [],
+}) {
   const pathname = usePathname();
   const sp = useSearchParams();
   const router = useRouter();
 
   const selected = (sp.get("partBrand") || "")
     .split(",")
-    .map(s => s.trim())
+    .map((s) => s.trim())
     .filter(Boolean);
 
   const onChange = (vals) => {
@@ -21,11 +26,8 @@ export default function PartBrandFilterClient({ title = "Parça Markaları", opt
   };
 
   return (
-    <PartBrandCheckboxes
-      title={title}
-      values={selected}
-      options={options}
-      onChange={onChange}
-    />
+    <FilterBox title={title}>
+      <PartBrandCheckboxes values={selected} options={options} onChange={onChange} />
+    </FilterBox>
   );
 }

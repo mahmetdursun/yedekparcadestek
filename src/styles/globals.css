@@ -1,5 +1,10 @@
+@charset "UTF-8";
+/* globals.scss — DÜZELTİLMİŞ SÜRÜM */
+/* @use satırları en üstte ve bitişik olmalı */
 @import "@fortawesome/fontawesome-free/css/all.min.css";
-html, body {
+/* ---- reset / base ---- */
+html,
+body {
   height: 100%;
 }
 
@@ -10,7 +15,8 @@ body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 }
 
-button, input {
+button,
+input {
   font-family: inherit;
 }
 
@@ -21,4 +27,28 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+/* Küçük ekranlarda metin çok sıkışmasın */
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+@media (min-width: 992px) {
+  html {
+    font-size: 16px;
+  }
+}
+/* Motion azaltma tercihini saygıla */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }/*# sourceMappingURL=globals.css.map */

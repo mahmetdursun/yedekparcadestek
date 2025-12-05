@@ -1,0 +1,455 @@
+/* ===== Block: brand-panel (inline layout) ================================ */
+.brand-panel {
+  position: relative;
+  width: 100%;
+  max-width: 1120px;
+  margin: 10px auto 0;
+
+  &__rail {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.55rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 96px;
+    padding: 0.6rem 0.6rem 0.65rem;
+    text-decoration: none;
+    color: #111;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    transition: transform 0.14s, border-color 0.14s, background 0.14s;
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: #ff7a1a;
+      background: #fff;
+    }
+
+    img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+  }
+
+  &__pill-name {
+    margin-top: 0.28rem;
+    font-size: 12px;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  &__mega {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+  }
+
+  &__mega-grid {
+    display: grid;
+    padding-top: 5px;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    max-height: 52.5vh;
+    overflow: auto;
+  }
+
+  &__mega-item {
+    text-align: center;
+    border: 1px solid #eef1f5;
+    border-radius: 12px;
+    background: #fff;
+    transition: transform 0.14s, border-color 0.14s, box-shadow 0.14s;
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: #ff7a1a;
+      box-shadow: 0 10px 20px rgba(255, 122, 26, 0.18);
+    }
+  }
+
+  &__mega-thumb {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.4rem;
+
+    img {
+      object-fit: contain;
+    }
+  }
+
+  &__mega-title {
+    display: flow;
+    font-size: 9.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #4e4e4e;
+  }
+}
+
+/* Responsives (inline) */
+@media (max-width: 1200px) {
+  .brand-panel__mega-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .brand-panel__mega-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-panel__mega-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .brand-panel__mega-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Yer tutucular */
+.brand-panel__mega-slot {
+  min-height: 320px;
+}
+
+@media (max-width: 1200px) {
+  .brand-panel__mega-slot {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 992px) {
+  .brand-panel__mega-slot {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-panel__mega-slot {
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 576px) {
+  .brand-panel__mega-slot {
+    min-height: 240px;
+  }
+}
+
+.brand-panel__panel-slot {
+  min-height: 520px;
+}
+
+@media (max-width: 1200px) {
+  .brand-panel__panel-slot {
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 992px) {
+  .brand-panel__panel-slot {
+    min-height: 460px;
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-panel__panel-slot {
+    min-height: 420px;
+  }
+}
+
+@media (max-width: 576px) {
+  .brand-panel__panel-slot {
+    min-height: 380px;
+  }
+}
+
+/* ===== Block: brand-panel-side (yan yana layout) ========================= */
+.brand-panel-side {
+  &__wrap {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  &__left {
+    display: grid;
+    place-items: center;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  &__brands {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-self: center;
+    justify-content: center;
+    margin-block: auto;
+  }
+
+  &__pill-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding-block: 5px;
+    text-decoration: none;
+    color: #4d4d4d;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    transition: transform 0.14s, border-color 0.14s, background 0.14s;
+
+    &:hover {
+      transform: translateX(3px);
+      border-color: #ff7a1a;
+      background: #fff;
+    }
+
+    img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+  }
+
+  &__models {
+    min-height: 420px;
+    align-self: center;
+    margin-block: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* Responsives (side) */
+@media (max-width: 992px) {
+  .brand-panel-side__wrap {
+    grid-template-columns: 360px 1fr;
+    gap: 18px;
+  }
+
+  .brand-panel-side__grid {
+    grid-template-columns: 200px 1fr;
+  }
+
+  .brand-panel-side__models {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-panel-side__wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-panel-side__left {
+    order: 1;
+  }
+
+  .brand-panel-side__right {
+    order: 2;
+  }
+
+  .brand-panel-side__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-panel-side__models {
+    min-height: 320px;
+  }
+}
+
+/* === Legacy class alias’ları (JSX’i değiştirmeden çalışsın) ============== */
+/* inline */
+.brandsPopover {
+  @extend .brand-panel;
+}
+
+.brandRail {
+  @extend .brand-panel__rail;
+}
+
+.brandPill {
+  @extend .brand-panel__pill;
+}
+
+.brandPill__name {
+  @extend .brand-panel__pill-name;
+}
+
+.brandMega {
+  @extend .brand-panel__mega;
+}
+
+.brandMega__grid {
+  @extend .brand-panel__mega-grid;
+}
+
+.brandMega__item {
+  @extend .brand-panel__mega-item;
+}
+
+.brandMega__thumb {
+  @extend .brand-panel__mega-thumb;
+}
+
+.brandMega__title {
+  @extend .brand-panel__mega-title;
+}
+
+/* side */
+.sideWrap {
+  @extend .brand-panel-side__wrap;
+}
+
+.sideLeft {
+  @extend .brand-panel-side__left;
+}
+
+.sideRight {
+  @extend .brand-panel-side__right;
+}
+
+.sidePanel {
+  @extend .brand-panel-side__grid;
+}
+
+.sideBrands {
+  @extend .brand-panel-side__brands;
+}
+
+.sideModels {
+  @extend .brand-panel-side__models;
+}
+
+.brandPillVertical {
+  @extend .brand-panel-side__pill-vertical;
+}
+
+/* yer tutucu alias’ları (opsiyonel) */
+.brandMegaSlot {
+  @extend .brand-panel__mega-slot;
+}
+
+.brandPanelSlot {
+  @extend .brand-panel__panel-slot;
+}
+
+/* ===== Desktop scaling ( > 992px ) ===================================== */
+/* Varsayılan: 7 kolon (>=1400px), sol kolon 220px zaten tanımlı */
+
+@media (max-width: 1399.98px) and (min-width: 1200px) {
+
+  /* 6 kolona düşür */
+  .brand-panel-side .brand-panel__mega-grid,
+  .sideModels .brandMega__grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  /* Sol marka sütununu hafif daralt, pill'leri küçült */
+  .brand-panel-side__grid {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .brand-panel-side__brands {
+    gap: 6px;
+  }
+
+  .brand-panel-side__pill-vertical,
+  .brandPillVertical {
+    gap: 2px;
+    padding-block: 4px;
+  }
+
+  .brand-panel-side__pill-vertical img,
+  .brandPillVertical img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-panel-side__pill-vertical .brand-panel__pill-name,
+  .brandPill__name {
+    font-size: 11.5px;
+  }
+
+  .brand-panel-side__wrap{
+    grid-template-columns: 350px 1fr;
+  }
+}
+
+@media (max-width: 1199.98px) and (min-width: 992px) {
+
+  /* 5 kolona düşür */
+  .brand-panel-side .brand-panel__mega-grid,
+  .sideModels .brandMega__grid {
+    grid-template-columns: repeat(4.4, 1fr);
+  }
+
+  /* Sol sütunu biraz daha daralt, pill'leri bir kademe daha küçült */
+  .brand-panel-side__grid {
+    grid-template-columns: 90px 1fr;
+  }
+
+  .brand-panel-side__brands {
+    gap: 6px;
+  }
+
+  .brand-panel-side__pill-vertical,
+  .brandPillVertical {
+    gap: 2px;
+    padding-block: 4px;
+  }
+  
+  .brand-panel-side__wrap{
+    grid-template-columns: 300px 1fr;
+  }
+
+  .brand-panel-side__pill-vertical img,
+  .brandPillVertical img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-panel-side__pill-vertical .brand-panel__pill-name,
+  .brandPill__name {
+    font-size: 11px;
+  }
+}
+
+/* Güvenlik için grid taşmasın; sağ panel kayabilir */
+.sideModels .brandMega__grid,
+.brand-panel-side .brand-panel__mega-grid {
+  max-height: 52.5vh;
+  /* zaten vardı; burada side için tekrar güvence */
+  overflow: auto;
+}
+

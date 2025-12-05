@@ -47,7 +47,6 @@ export default function ProductGallery({ product }) {
           src={imgs[idx]}
           alt={product.title}
           fill
-          sizes="640px"
           className={styles["pd-gallery__img"]}
         />
       </div>

@@ -1,9 +1,24 @@
-@use '../../../styles/variables' as *;  
+@use '../../../styles/variables' as *;
 
-.sf-navbar {
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        background: $surface;
-        border-bottom: 1px solid $border;
+/* navbar’ın kendisi – global */
+:global(.sf-navbar) {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: $surface;
+  border-bottom: 1px solid $border;
+}
+
+/* Sağ blok – varsayılan gizli */
+:global(.sf-navbar__right) {
+  display: none;
+}
+
+/* 700px ve üzeri: göster + flex düzeni */
+@media (min-width: 700px) {
+  :global(.sf-navbar__right) {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
 }

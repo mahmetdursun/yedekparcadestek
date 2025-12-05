@@ -1,0 +1,363 @@
+@charset "UTF-8";
+/* Palet – Klar benzeri mor ton */
+.hamburger__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 18, 32, 0.44);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.24s ease;
+  z-index: 998;
+}
+.hamburger__overlay[data-open="1"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hamburger__panel {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(380px, 92vw);
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+  transform: translateX(-100%);
+  transition: transform 0.28s cubic-bezier(0.25, 0.9, 0.25, 1);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+.hamburger__panel[data-open="1"] {
+  transform: translateX(0);
+}
+
+.hamburger__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.hamburger__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #111827;
+  text-decoration: none;
+}
+.hamburger__brand b {
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+.hamburger__close {
+  width: 36px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.hamburger__header {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.hamburger__title {
+  font-weight: 800;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.hamburger__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 10px;
+  padding: 5px 8px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Scroll + edge shadows */
+.hamburger__scroll {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 12px;
+  background: #f8fafc;
+  /* üst-alt gölge */
+}
+.hamburger__scroll::before, .hamburger__scroll::after {
+  content: "";
+  position: sticky;
+  left: 0;
+  right: 0;
+  height: 12px;
+  display: block;
+  z-index: 1;
+}
+.hamburger__scroll::before {
+  top: 0;
+  box-shadow: inset 0 6px 8px -6px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+}
+.hamburger__scroll::after {
+  bottom: 0;
+  box-shadow: inset 0 -6px 8px -6px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+}
+.hamburger__scroll[data-top="1"]::before {
+  opacity: 0;
+}
+.hamburger__scroll:not([data-top="1"])::before {
+  opacity: 1;
+}
+.hamburger__scroll[data-bottom="1"]::after {
+  opacity: 0;
+}
+.hamburger__scroll:not([data-bottom="1"])::after {
+  opacity: 1;
+}
+
+/* Section kart (Klar look) */
+.section {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.08);
+  padding: 10px;
+}
+
+.section__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 10px 6px;
+  border-bottom: 1px dashed #eef1f5;
+}
+
+.section__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #ed3a3a;
+  opacity: 0.85;
+}
+
+.section__title {
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+/* Liste & satırlar */
+.list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #eef1f5;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px 10px;
+  text-decoration: none;
+  color: #111827;
+  transition: all 0.14s ease;
+}
+.item:hover {
+  border-color: rgba(237, 58, 58, 0.45);
+  box-shadow: 0 10px 24px rgba(237, 58, 58, 0.1);
+  transform: translateY(-1px);
+}
+
+.item__left {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.item__left img {
+  width: 32px;
+  height: 20px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.item__left b {
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.item__chev {
+  opacity: 0.55;
+}
+
+.isActive {
+  background: #f8f4f4;
+  border-color: rgba(237, 58, 58, 0.55);
+  box-shadow: 0 12px 28px rgba(237, 58, 58, 0.14);
+}
+
+/* Alt dock */
+.hamburger__dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  padding: 10px 12px 12px;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.dock__btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  text-decoration: none;
+  color: #111827;
+  font-weight: 700;
+}
+.dock__btn svg {
+  width: 18px;
+  height: 18px;
+}
+.dock__btn span {
+  font-size: 11px;
+}
+.dock__btn:hover {
+  border-color: rgba(237, 58, 58, 0.45);
+  box-shadow: 0 6px 16px rgba(237, 58, 58, 0.1);
+}
+
+.dock__badge {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  background: #dc2626;
+  color: #fff;
+  border-radius: 999px;
+  padding: 0 6px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+@media (min-width: 768px) {
+  .hamburger__panel {
+    width: min(420px, 92vw);
+  }
+}
+/* satırları tam genişliğe zorla */
+.catnav__list li {
+  display: block;
+}
+
+.catnav__row {
+  display: flex; /* zaten varsa sorun yok */
+  width: 100%; /* <-- uzat */
+  min-height: 56px;
+}
+
+/* gruplar/markalar için aynı stil */
+.is-groups .catnav__row,
+.is-brands .catnav__row {
+  width: 100%; /* <-- uzat */
+}
+
+/* soldaki içerik doğru esnesin; yazı taşmasın */
+.catnav__row-left {
+  min-width: 0; /* flex shrink’e izin ver */
+  gap: 10px;
+}
+
+.catnav__row-left b {
+  flex: 1 1 auto;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* logo kutucuğu sabit kalsın */
+.is-groups .catnav__row-left img,
+.is-brands .catnav__row-left img {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border: 1px solid #eef2f6;
+  border-radius: 10px;
+  background: #f9fbff;
+}
+
+/* === SATIRI TAM GENİŞLİĞE UZAT === */
+.list {
+  padding-inline: 0;
+}
+
+.list > li {
+  display: block;
+  inline-size: 100%;
+} /* li tam genişlik */
+.item {
+  display: flex; /* zaten var ama güvence altına al */
+  inline-size: 100%; /* = width:100%; modüllerde daha sağlam */
+  box-sizing: border-box;
+  min-height: 56px;
+}
+
+/* Soldaki içerik esnesin; yazı taşmasın */
+.item__left {
+  min-width: 0; /* flex shrink’e izin ver */
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item__left b {
+  flex: 1 1 auto;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Logo kapsülü (grup/marka) */
+.item__left img {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border: 1px solid #eef2f6;
+  border-radius: 10px;
+  background: #f9fbff;
+}/*# sourceMappingURL=mobile-hamburger.module.css.map */

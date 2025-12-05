@@ -6,7 +6,8 @@
   overflow: hidden;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  background: #000;
+  background: #fff;
+  /* arka planı nötr yapalım */
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
@@ -20,15 +21,16 @@
 .tile__img {
   position: relative;
   display: block;
-  height: 320px;
-  /* tüm kartların yüksekliği */
-  aspect-ratio: 3/5;
-  /* dikey görünüm; farklı resimler eşit kırpılır */
+  width: 100%;
+  /* 180px ile 320px arasında, ekrana göre büyüsün */
+  height: clamp(180px, 32vw, 320px);
+  /* aspect-ratio KALDIRILDI -> çakışmayı önlüyoruz */
 }
 
 .tile__img :global(img) {
   -o-object-fit: cover;
      object-fit: cover;
+  /* fill kullandığımız için stretch olmaz */
 }
 
 /* Üstte görünen siyah gölgelendirme */
@@ -84,9 +86,6 @@
 
 /* Responsive yükseklik */
 @media (max-width: 991.98px) {
-  .tile__img {
-    height: 280px;
-  }
   .t1 {
     font-size: 18px;
   }
@@ -95,9 +94,6 @@
   }
 }
 @media (max-width: 575.98px) {
-  .tile__img {
-    height: 240px;
-  }
   .t1 {
     font-size: 16px;
   }
