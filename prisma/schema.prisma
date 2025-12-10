@@ -10,25 +10,24 @@ generator client {
 model User {
   id            String    @id @default(cuid())
   // NextAuth'un beklediği alanlar:
-  name          String? // <- zorunlu değil
+  name          String?   // zorunlu değil
   email         String    @unique
   emailVerified DateTime?
   image         String?
 
-  // Senin ek alanların: hepsi opsiyonel olmalı (OAuth'ta gelmez)
-  firstName String?
-  lastName  String?
-  password  String? // local kayıt/giriş için bcrypt hash (opsiyonel)
-  phone     String?
-  birthDate DateTime?
+  // Senin ek alanların:
+  firstName     String?
+  lastName      String?
+  password      String?   // local kayıt/giriş için bcrypt hash (opsiyonel)
+  phone         String?
+  birthDate     DateTime?
 
-  // timestamps
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  // NextAuth ilişkileri için (zaten eklemiştik)
-  accounts Account[]
-  sessions Session[]
+  accounts      Account[]
+  sessions      Session[]
+  passwordResetTokens PasswordResetToken[]
 }
 
 model Account {
@@ -70,4 +69,13 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
 }

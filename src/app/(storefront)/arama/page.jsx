@@ -12,11 +12,14 @@ import {
 import ProductListRowCart from "../../../components/product/ProductListRowCart";
 import ProductCard from "../../../components/product/ProductCard";
 
-import PartBrandFilterClient from "../../../components/filters/PartBrandFilterClient";
-import VehicleBrandFilterClient from "../../../components/filters/VehicleBrandFilterClient";
-import CategoryFilterClient from "../../../components/filters/CategoryFilterClient";
+import CheckboxFilter from "@/components/filters/CheckboxFilter";
+
+import Pagination from "@/components/common/Pagination";
 
 export const dynamic = "force-dynamic";
+
+const PAGE_SIZE_LIST = 8;
+const PAGE_SIZE_GALERI = 16;
 
 const decodeParam = (v) => {
   try {
@@ -29,8 +32,12 @@ const decodeParam = (v) => {
 export default async function SearchPage({ searchParams }) {
   const sp = await searchParams;
 
+  const pageRaw = Number(sp?.page || 1);
+  const page = pageRaw > 0 ? pageRaw : 1;
+
   const q = String(sp?.q ?? "").trim();
-  const order = String(sp?.sirala ?? "");
+  const rawOrder = sp?.sort ?? sp?.sirala ?? "";
+  const order = String(rawOrder || "");
 
   // görünüm: liste | galeri (default: liste)
   const viewParam = String(sp?.gorunum ?? "");
@@ -54,10 +61,7 @@ export default async function SearchPage({ searchParams }) {
 
   // kategori (Tahrik / V Kayışları, Arka Takım ve Süspansiyon...)
   const catRaw = String(sp?.cat ?? "");
-  const selectedCats = catRaw
-    .split(",")
-    .map(decodeParam)
-    .filter(Boolean);
+  const selectedCats = catRaw.split(",").map(decodeParam).filter(Boolean);
 
   // 1) sadece metin araması
   const baseResults = q ? searchProducts(q) : [];
@@ -99,6 +103,15 @@ export default async function SearchPage({ searchParams }) {
   else if (order === "name-asc")
     sorted.sort((a, b) => a.title.localeCompare(b.title));
 
+  // 5) sayfalama
+  const pageSize = view === "galeri" ? PAGE_SIZE_GALERI : PAGE_SIZE_LIST;
+  const totalItems = sorted.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const currentPage = Math.min(page, totalPages);
+
+  const start = (currentPage - 1) * pageSize;
+  const pageItems = sorted.slice(start, start + pageSize);
+
   return (
     <div className="container py-4">
       {/* Üst bar: başlık + Görünüm + Sırala */}
@@ -112,41 +125,67 @@ export default async function SearchPage({ searchParams }) {
           <ViewSelect view={view} />
 
           <span className="small text-muted ms-3">Sırala:</span>
-          <SortSelect q={q} order={order} />
+          <SortSelect q={q} order={order} param="sort" />
         </div>
       </div>
 
       <div className="row g-3">
         {/* Sol filtre kolon */}
         <div className="col-12 col-lg-3">
-          <VehicleBrandFilterClient options={vehicleOptions} />
-          <CategoryFilterClient options={categoryOptions} />
-          <PartBrandFilterClient title="Marka" options={brandOptions} />
+          <CheckboxFilter
+            title="Araçlar"
+            paramKey="vehicleBrand"
+            options={vehicleOptions}
+            searchable={true}
+          />
+
+          <CheckboxFilter
+            title="Kategori"
+            paramKey="cat"
+            options={categoryOptions}
+            searchable={true}
+          />
+
+          <CheckboxFilter
+            title="Marka"
+            paramKey="partBrand"
+            options={brandOptions}
+            // Marka listesi çok uzunsa burayı true yapıp arama da açabilirsin
+            searchable={false}
+          />
           {/* Arama kelimesi + fiyat kutularını sonra ekleyeceğiz */}
         </div>
 
         {/* Sağ taraf: sonuçlar (liste / galeri) */}
         <div className="col-12 col-lg-9">
-          {sorted.length === 0 && (
+          {totalItems === 0 && (
             <div className="text-muted">Hiç sonuç bulunamadı.</div>
           )}
 
-          {sorted.length > 0 && view === "liste" && (
+          {totalItems > 0 && view === "liste" && (
             <>
-              {sorted.map((p) => (
+              {pageItems.map((p) => (
                 <ProductListRowCart key={p.slug} product={p} />
               ))}
             </>
           )}
 
-          {sorted.length > 0 && view === "galeri" && (
+          {totalItems > 0 && view === "galeri" && (
             <div className="row g-3">
-              {sorted.map((p) => (
+              {pageItems.map((p) => (
                 <div key={p.slug} className="col-6 col-lg-3 d-flex">
                   <ProductCard p={p} />
                 </div>
               ))}
             </div>
+          )}
+
+          {totalItems > 0 && (
+            <Pagination
+              totalItems={totalItems}
+              page={currentPage}
+              pageSize={pageSize}
+            />
           )}
         </div>
       </div>

@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 
 const PROVIDERS = {
-  google:  { label: 'Google',  btn: 'btn-danger' },
-  facebook:{ label: 'Facebook',btn: 'btn-primary' },
+  google: { label: 'Google', btn: 'btn-danger' },
 };
 
 export default function LinkedAccountsPage() {
@@ -30,7 +29,7 @@ export default function LinkedAccountsPage() {
     })();
   }, [status]);
 
-  const isLinked = (provider) => accounts.some(a => a.provider === provider);
+  const isLinked = (provider) => accounts.some((a) => a.provider === provider);
 
   async function unlink(accountId) {
     if (!confirm('Bu bağlantıyı kaldırmak istiyor musun?')) return;
@@ -40,9 +39,9 @@ export default function LinkedAccountsPage() {
       body: JSON.stringify({ accountId }),
     });
     if (res.ok) {
-      setAccounts(prev => prev.filter(a => a.id !== accountId));
+      setAccounts((prev) => prev.filter((a) => a.id !== accountId));
     } else {
-      const j = await res.json().catch(()=>({message:'Hata'}));
+      const j = await res.json().catch(() => ({ message: 'Hata' }));
       alert(j.message || 'Bağlantı kaldırılamadı.');
     }
   }
@@ -56,26 +55,35 @@ export default function LinkedAccountsPage() {
       <h1 className="h5 fw-bold mb-3">Bağlı Hesaplar</h1>
       {err && <div className="alert alert-danger">{err}</div>}
 
-      {['google','facebook'].map((p) => {
+      {['google'].map((p) => {
         const linked = isLinked(p);
-        const acc = accounts.find(a => a.provider === p);
+        const acc = accounts.find((a) => a.provider === p);
         return (
-          <div key={p} className="d-flex align-items-center justify-content-between border rounded p-3 mb-2">
+          <div
+            key={p}
+            className="d-flex align-items-center justify-content-between border rounded p-3 mb-2"
+          >
             <div>
               <div className="fw-semibold">{PROVIDERS[p].label}</div>
               <div className="small text-muted">
                 {linked ? 'Bağlı' : 'Bağlı değil'}
-                {linked && acc?.providerAccountId ? ` • ${acc.providerAccountId}` : ''}
               </div>
             </div>
             <div>
               {linked ? (
-                <button className="btn btn-outline-secondary btn-sm" onClick={() => unlink(acc.id)}>
+                <button
+                  className="btn btn-outline-secondary btn-sm"
+                  onClick={() => unlink(acc.id)}
+                >
                   Bağlantıyı Kaldır
                 </button>
               ) : (
-                <button className={`btn btn-sm ${PROVIDERS[p].btn}`}
-                        onClick={() => signIn(p, { callbackUrl: '/profil/hesaplar' })}>
+                <button
+                  className={`btn btn-sm ${PROVIDERS[p].btn}`}
+                  onClick={() =>
+                    signIn(p, { callbackUrl: '/profil/hesaplar' })
+                  }
+                >
                   {PROVIDERS[p].label}’ı Bağla
                 </button>
               )}

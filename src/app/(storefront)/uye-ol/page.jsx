@@ -133,7 +133,6 @@ export default function SignUpPage() {
 
           <div className="text-center text-muted my-3">veya</div>
           <div className="d-flex justify-content-center gap-3 pb-2">
-            <button type="button" className="btn btn-light border">Facebook</button>
             <button type="button" className="btn btn-light border">Google</button>
           </div>
         </div>

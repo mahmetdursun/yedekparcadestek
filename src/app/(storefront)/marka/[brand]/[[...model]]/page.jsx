@@ -164,10 +164,14 @@ async function fetchBrandData({ brand, model, filters }) {
   }
 
   // (opsiyonel) sort’u burada da uygulayabilirsin
-  if (filters?.sort === "price_asc") arr.sort((a, b) => a.price - b.price);
-  else if (filters?.sort === "price_desc") arr.sort((a, b) => b.price - a.price);
-  else if (filters?.sort === "new") {
-    // mock: id/sku/ean'den tarih çıkaramadığımız için şimdilik dokunma
+  if (filters?.sort === "price-asc") {
+    arr.sort((a, b) => a.price - b.price);
+  } else if (filters?.sort === "price-desc") {
+    arr.sort((a, b) => b.price - a.price);
+  } else if (filters?.sort === "name-asc") {
+    arr.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+  } else if (filters?.sort === "new") {
+    // mock data'da gerçek tarih olmadığı için şimdilik ekstra işlem yok
   }
 
   return {

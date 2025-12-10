@@ -4,7 +4,6 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 
 import GoogleProvider from "next-auth/providers/google";
-import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
@@ -12,24 +11,21 @@ export const authOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt" },
+
   pages: {
-    signIn: "/uye-giris", // kendi giriş sayfan
+    signIn: "/uye-giris",
   },
 
-  allowDangerousEmailAccountLinking: process.env.NODE_ENV !== 'production',
+  allowDangerousEmailAccountLinking: process.env.NODE_ENV !== "production",
 
   providers: [
-    // Sosyal girişler
+    // Google ile giriş
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    }),
 
-    // Email + Şifre (kendi kayıt formundan oluşturduğun kullanıcılar için)
+    // E-posta + şifre ile giriş (brute-force için küçük delay ekli)
     CredentialsProvider({
       name: "Email & Password",
       credentials: {
@@ -37,34 +33,56 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const email = String(credentials?.email || "").toLowerCase().trim();
+        const email = String(credentials?.email || "")
+          .toLowerCase()
+          .trim();
         const password = String(credentials?.password || "");
 
         const user = await prisma.user.findUnique({ where: { email } });
-        // Sosyal hesapla açılmışsa user.password null olabilir:
-        if (!user?.password) return null;
+
+        // Kullanıcı yoksa veya şifre alanı yoksa → gecikmeli null
+        if (!user?.password) {
+          await new Promise((r) => setTimeout(r, 500));
+          return null;
+        }
 
         const ok = await bcrypt.compare(password, user.password);
-        if (!ok) return null;
+        if (!ok) {
+          // Yanlış şifre → yine gecikmeli null
+          await new Promise((r) => setTimeout(r, 500));
+          return null;
+        }
 
-        return { id: user.id, email: user.email, name: `${user.firstName} ${user.lastName}` };
+        return {
+          id: user.id,
+          email: user.email,
+          name: `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim(),
+        };
       },
     }),
   ],
-   callbacks: {
+
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user?.id) token.uid = user.id;
+      return token;
+    },
+    async session({ session, token }) {
+      if (token?.uid) {
+        session.user = session.user || {};
+        session.user.id = token.uid;
+      }
+      return session;
+    },
     async redirect({ url, baseUrl }) {
       try {
         const u = new URL(url, baseUrl);
-        // Login sayfasına döndürmeye çalışıyorsa -> ana sayfa
         if (u.pathname === "/uye-giris") return baseUrl;
-        // Aynı origin'de ise izin ver, değilse ana sayfaya
         return u.origin === baseUrl ? u.href : baseUrl;
       } catch {
         return baseUrl;
       }
     },
-    async jwt({ token, user }) { if (user?.id) token.uid = user.id; return token; },
-    async session({ session, token }) { if (token?.uid) session.user.id = token.uid; return session; },
   },
 };
 

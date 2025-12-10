@@ -23,7 +23,7 @@ export default function ViewSelect({ view = "liste", param = "gorunum" }) {
   return (
     <select
       className="form-select form-select-sm w-auto"
-      defaultValue={current}
+      value={current}
       onChange={(e) => update(e.target.value)}
       aria-label="Görünüm"
     >

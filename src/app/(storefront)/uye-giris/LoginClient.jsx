@@ -96,7 +96,11 @@ export default function LoginClient() {
               <input className="form-check-input" type="checkbox" id="remember" name="remember" />
               <label className="form-check-label" htmlFor="remember">Beni hatırla</label>
             </div>
-            <Link href="/sifre-sifirla" className="link-secondary">Şifremi Unuttum</Link>
+            <p className="mt-3 text-center">
+              <a href="/sifremi-unuttum" className="small">
+                Şifremi unuttum
+              </a>
+            </p>
           </div>
         </div>
 
@@ -112,21 +116,11 @@ export default function LoginClient() {
         <div className="text-center text-muted my-3">veya</div>
 
         <div className="d-flex justify-content-center gap-3">
-          <button type="button" className="btn btn-light border" onClick={() => signIn("facebook", { callbackUrl })}>
-            Facebook
-          </button>
           <button type="button" className="btn btn-light border" onClick={() => signIn("google", { callbackUrl })}>
             Google
           </button>
         </div>
       </form>
-
-      {process.env.NODE_ENV !== "production" && (
-        <p className="small text-muted mt-3">
-          Not: Geliştirme ortamında OAuth eşleşmelerini hızlandırmak için
-          <code> allowDangerousEmailAccountLinking </code>’i auth options’a ekleyebilirsin.
-        </p>
-      )}
     </div>
   );
 }

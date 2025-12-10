@@ -23,8 +23,8 @@ export default function Footer() {
               <a className={styles.socialBtn} href="#" aria-label="Facebook">
                 <i className="fab fa-facebook-f" />
               </a>
-              <a className={styles.socialBtn} href="#" aria-label="Twitter">
-                <i className="fab fa-x-twitter" />
+              <a className={styles.socialBtn} href="#" aria-label="Tiktok">
+                <i className="fab fa-tiktok" />
               </a>
             </div>
           </div>

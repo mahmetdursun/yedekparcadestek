@@ -1,22 +1,25 @@
-// src/components/filters/CategoryFilterClient.jsx
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
+import { useUrlFilter } from "@/hooks/useUrlFilter";
 import FilterBox from "./FilterBox";
 import styles from "./style.module.scss";
 
-export default function CategoryFilterClient({ options = [] }) {
-  const pathname = usePathname();
-  const sp = useSearchParams();
-  const router = useRouter();
-
+/**
+ * Generic checkbox filtre
+ * - URL param anahtarı: paramKey (ör: "cat", "partBrand", "vehicleBrand")
+ * - options: [{ value, label, count }]
+ */
+export default function CheckboxFilter({
+  title,
+  paramKey,
+  options = [],
+  searchable = true,
+}) {
+  const { getArray, update } = useUrlFilter();
   const [search, setSearch] = useState("");
 
-  const selected = (sp.get("cat") || "")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
+  const selected = getArray(paramKey);
 
   const filtered = useMemo(() => {
     const s = search.trim().toLowerCase();
@@ -26,26 +29,18 @@ export default function CategoryFilterClient({ options = [] }) {
     );
   }, [options, search]);
 
-  const onChange = (vals) => {
-    const next = new URLSearchParams(sp.toString());
-    if (vals.length) next.set("cat", vals.join(","));
-    else next.delete("cat");
-    next.set("page", "1");
-    router.push(`${pathname}?${next.toString()}`, { scroll: false });
-  };
-
-  const toggle = (v, checked) => {
+  const toggle = (value, checked) => {
     const set = new Set(selected);
-    checked ? set.add(v) : set.delete(v);
-    onChange(Array.from(set));
+    checked ? set.add(value) : set.delete(value);
+    update({ [paramKey]: Array.from(set) });
   };
 
   return (
     <FilterBox
-      title="Kategori"
-      searchValue={search}
-      onSearchChange={setSearch}
-      searchPlaceholder="Ara.."
+      title={title}
+      searchValue={searchable ? search : undefined}
+      onSearchChange={searchable ? setSearch : undefined}
+      searchPlaceholder={searchable ? "Ara.." : undefined}
     >
       <div className={styles.partbrand__list}>
         {filtered.map((o) => (

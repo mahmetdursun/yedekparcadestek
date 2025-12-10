@@ -186,4 +186,7 @@
     height: 40px;
     font-size: 18px;
   }
+  .account__logout {
+    margin-top: 1rem;
+  }
 }/*# sourceMappingURL=style.module.css.map */

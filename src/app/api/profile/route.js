@@ -1,36 +1,47 @@
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+// src/app/api/profile/route.js
+import { NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 export async function GET() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const user = await prisma.user.findUnique({
-    where: { email: session.user.email },
-    select: { email: true, name: true, phone: true, birthDate: true },
+    where: { id: session.user.id },
+    select: {
+      id: true,
+      email: true,
+      firstName: true,
+      lastName: true,
+      phone: true,
+      birthDate: true,
+      image: true,
+    },
   });
 
-  return Response.json({ user });
+  return NextResponse.json({ user });
 }
 
 export async function PUT(req) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const body = await req.json().catch(() => ({}));
-  const { name, phone, birthDate } = body;
+  const { firstName, lastName, phone, birthDate } = body;
 
-  // basit temizlik/guard
   const data = {};
-  if (typeof name === "string") data.name = name.trim();
+
+  if (typeof firstName === "string") data.firstName = firstName.trim();
+  if (typeof lastName === "string") data.lastName = lastName.trim();
   if (typeof phone === "string") data.phone = phone.trim();
+
   if (typeof birthDate === "string" && birthDate) {
     const d = new Date(birthDate);
     if (!Number.isNaN(d.valueOf())) data.birthDate = d;
@@ -39,9 +50,9 @@ export async function PUT(req) {
   }
 
   await prisma.user.update({
-    where: { email: session.user.email },
+    where: { id: session.user.id },
     data,
   });
 
-  return Response.json({ ok: true });
+  return NextResponse.json({ ok: true });
 }
