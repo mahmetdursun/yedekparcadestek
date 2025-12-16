@@ -16,7 +16,7 @@ import {
   brandKey, toSlug
 } from '@/data/brandsModels';
 
-import styles from './mobile-hamburger.module.scss';
+import styles from './style.module.scss';
 
 export default function MobileHamburger({ open, onClose }) {
   const { data: session, status } = useSession();

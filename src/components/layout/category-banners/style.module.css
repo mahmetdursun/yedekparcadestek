@@ -3,6 +3,7 @@
   border-radius: 14px;
   overflow: hidden;
   background: #000;
+  min-height: 220px;
 }
 .banner-card img {
   width: 100%;

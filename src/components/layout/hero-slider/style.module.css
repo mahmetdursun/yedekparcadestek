@@ -1,37 +1,15 @@
 @charset "UTF-8";
-.banner-hero {
+.bannerHero {
   border-radius: 14px;
   overflow: hidden;
-  /* Swiper’ın kendi sınıflarını module içinde global hedefle */
-}
-.banner-hero :global(.swiper) {
-  width: 100%;
-}
-.banner-hero :global(.swiper-button-prev),
-.banner-hero :global(.swiper-button-next) {
-  color: #fff;
-  width: 42px;
-  height: 42px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.banner-hero :global(.swiper-button-prev) {
-  left: 16px;
-}
-.banner-hero :global(.swiper-button-next) {
-  right: 16px;
-}
-.banner-hero :global(.swiper-pagination-bullet-active) {
-  background: #df4f4f;
+  background: #000;
 }
 
-/* Görsel alanı (yüksekliği oranla belirle) */
-/* Swiper içindeki görseller için oranlı alan */
-.banner-hero__media {
+.media {
   position: relative;
   width: 100%;
   aspect-ratio: 17/8;
-  /* responsive yükseklik */
   background: #111;
-  /* görsel gelmezse zemin */
+  /* ekstra garanti: bazı layoutlarda 0’a düşmesin */
+  min-height: 220px;
 }/*# sourceMappingURL=style.module.css.map */

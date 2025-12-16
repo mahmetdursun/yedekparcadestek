@@ -78,26 +78,22 @@
   transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
 
-/* Sadece aktif olmayanlarda hover rengi değişsin */
 .account__nav-item:hover:not(.account__nav-item--active) {
   background: #f8fafc;
   border-color: #e2e8f0;
 }
 
-/* ACTIVE: başlangıçta Genel Bakış + o sayfaya girince */
 .account__nav-item--active {
-  background: #eef2ff; /* indigo-50 */
-  border-color: #c7d2fe; /* indigo-200 */
-  color: #1d4ed8; /* indigo-700 */
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #1d4ed8;
 }
 
-/* Aktifken hover olursa bir tık koyulaşsın ama griye dönmesin */
 .account__nav-item--active:hover {
-  background: #e0e7ff; /* indigo-100 */
-  border-color: #a5b4fc; /* indigo-300 */
+  background: #e0e7ff;
+  border-color: #a5b4fc;
 }
 
-/* ikon / label renkleri */
 .account__nav-ico {
   color: #475569;
 }
@@ -115,21 +111,6 @@
   min-height: 60vh;
 }
 
-/* ===== Kart / panel – GLOBAL ===== */
-:global(.account-card) {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background: #fff;
-  padding: 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-/* küçük ekranda kart içi padding’i küçült */
-@media (max-width: 575.98px) {
-  :global(.account-card) {
-    padding: 12px;
-  }
-}
 /* ===== Basit tablo görünümü ===== */
 .table-lite {
   width: 100%;

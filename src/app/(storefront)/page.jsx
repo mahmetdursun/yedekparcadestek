@@ -5,6 +5,7 @@ import CategoryBanners from '@/components/layout/category-banners/CategoryBanner
 import ProductCard from '@/components/product/ProductCard';
 import BrandShowcase from '@/components/layout/car-show-case/BrandShowcase';
 import { MOCK_PRODUCTS } from '@/data/mockProducts'; // 👈
+import "@/styles/globals.scss";
 
 export default function Home(){
   const tiles = [

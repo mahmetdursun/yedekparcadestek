@@ -27,7 +27,7 @@ export default function Navbar({
 
   return (
     <>
-      <div className="sf-navbar bg-light border-bottom pb-3 pt-3">
+      <div className={`sf-navbar bg-light border-bottom pb-3 pt-3 ${styles.navWrap}`}>
         <div className="container-fluid d-flex align-items-center justify-content-between py-2">
           {/* Sol */}
           <div className="d-flex align-items-center gap-3">

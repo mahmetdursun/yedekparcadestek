@@ -6,6 +6,7 @@ import Sidebar from "@/components/layout/sidebar/Sidebar";
 import Footer from "@/components/layout/footer/Footer";
 import MobileHamburger from "@/components/layout/hamburger/Hamburger"; // ✅ EKLE
 import "@/styles/main.scss";
+import "@/styles/globals.scss";
 
 /** ≤992px → hamburger modu */
 function useIsHamburger() {

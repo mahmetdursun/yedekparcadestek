@@ -15,7 +15,7 @@ const SLIDES = [
 
 export default function HeroSlider() {
   return (
-    <div className={`card shadow-sm ${styles['banner-hero']}`}>
+    <div className={`card shadow-sm hero-slider ${styles.bannerHero}`}>
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
         autoplay={{ delay: 3500 }}
@@ -25,7 +25,7 @@ export default function HeroSlider() {
       >
         {SLIDES.map((s) => (
           <SwiperSlide key={s.id}>
-            <div className={styles['banner-hero__media']}>
+            <div className={styles.media}>
               <Image
                 src={s.img}
                 alt={s.alt}
@@ -40,3 +40,4 @@ export default function HeroSlider() {
     </div>
   );
 }
+

@@ -38,6 +38,7 @@
   border-bottom: 1px solid #eef2f7;
   margin-bottom: 10px;
 }
+
 .account__avatar {
   width: 44px;
   height: 44px;
@@ -47,8 +48,16 @@
   background: #f1f5f9;
   font-size: 20px;
 }
-.account__hello { font-weight: 700; line-height: 1.1; }
-.account__hint  { font-size: 12px; color: #64748b; }
+
+.account__hello {
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.account__hint {
+  font-size: 12px;
+  color: #64748b;
+}
 
 /* Menü */
 .account__nav {
@@ -70,32 +79,30 @@
   transition: background .12s ease, border-color .12s ease, color .12s ease;
 }
 
-/* Sadece aktif olmayanlarda hover rengi değişsin */
 .account__nav-item:hover:not(.account__nav-item--active) {
   background: #f8fafc;
   border-color: #e2e8f0;
 }
 
-/* ACTIVE: başlangıçta Genel Bakış + o sayfaya girince */
 .account__nav-item--active {
-  background: #eef2ff;      /* indigo-50 */
-  border-color: #c7d2fe;     /* indigo-200 */
-  color: #1d4ed8;            /* indigo-700 */
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #1d4ed8;
 }
 
-/* Aktifken hover olursa bir tık koyulaşsın ama griye dönmesin */
 .account__nav-item--active:hover {
-  background: #e0e7ff;      /* indigo-100 */
-  border-color: #a5b4fc;    /* indigo-300 */
+  background: #e0e7ff;
+  border-color: #a5b4fc;
 }
 
-/* ikon / label renkleri */
 .account__nav-ico {
   color: #475569;
 }
+
 .account__nav-item--active .account__nav-ico {
   color: #1d4ed8;
 }
+
 .account__nav-label {
   font-weight: 500;
 }
@@ -105,38 +112,25 @@
   min-height: 60vh;
 }
 
-/* ===== Kart / panel – GLOBAL ===== */
-:global(.account-card) {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background: #fff;
-  padding: 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.04);
-}
-
-/* küçük ekranda kart içi padding’i küçült */
-@media (max-width: 575.98px) {
-  :global(.account-card) {
-    padding: 12px;
-  }
-}
-
 /* ===== Basit tablo görünümü ===== */
 .table-lite {
   width: 100%;
   border-collapse: collapse;
 }
+
 .table-lite th,
 .table-lite td {
   padding: 10px 12px;
   border-bottom: 1px solid #eef2f7;
 }
+
 .table-lite th {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: .3px;
   color: #64748b;
 }
+
 .table-lite td {
   font-size: 14px;
 }
@@ -155,15 +149,17 @@
   .account {
     grid-template-columns: 1fr;
   }
+
   .account__sidebar {
     position: static;
   }
 }
 
-@media (max-width: 700.00px){
+@media (max-width: 700px) {
   .account__nav {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
   .account__nav-item {
     grid-template-columns: 18px minmax(0, 1fr);
     padding: 6px 8px;
@@ -172,6 +168,7 @@
   .account__nav-label {
     font-size: 13px;
   }
+
   .account__avatar {
     width: 40px;
     height: 40px;
@@ -179,7 +176,6 @@
   }
 
   .account__logout {
-  margin-top: 1rem;
+    margin-top: 1rem;
+  }
 }
-}
-

@@ -5,36 +5,9 @@
 .siteFooter {
   background: #0f172a;
   color: #eef2ff;
-  padding-top: 28px; /* üst boşluk */
-  padding-bottom: 0; /* alt boşluk kaldırıldı */
-  /* Container ve Bootstrap row/gap ince ayarları */
+  padding-top: 28px;
+  padding-bottom: 0;
   /* (Varsa) üst şerit */
-}
-.siteFooter :global(.container) {
-  /* XS’te kenar boşluklarını biraz arttır */
-  padding-left: 16px;
-  padding-right: 16px;
-}
-@media (min-width: 768px) {
-  .siteFooter :global(.container) {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-}
-.siteFooter :global(.row) {
-  /* Bootstrap gutter’larını kırılımlara göre yeniden tanımla */
-  --bs-gutter-x: 1rem;
-  --bs-gutter-y: 1.25rem;
-}
-@media (min-width: 768px) {
-  .siteFooter :global(.row) {
-    --bs-gutter-x: 1.25rem;
-  }
-}
-@media (min-width: 992px) {
-  .siteFooter :global(.row) {
-    --bs-gutter-x: 1.5rem;
-  }
 }
 .siteFooter .footer-newsletter {
   background: #dc2626;
@@ -58,7 +31,6 @@
   letter-spacing: 0.2px;
   color: #e2e8f0;
   text-transform: uppercase;
-  /* Tipografi merdiveni */
   font-size: 13px;
 }
 @media (min-width: 768px) {
@@ -82,7 +54,6 @@
   display: block;
   text-decoration: none;
   color: #cbd5e1;
-  /* Dokunmatik için hedef yüksekliği */
   padding: 8px 0;
   line-height: 1.35;
   font-size: 14px;
@@ -114,7 +85,7 @@
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 40px; /* XS’te biraz daha büyük hedef */
+  height: 40px;
   border-radius: 50%;
   color: #e2e8f0;
   border: 1px solid rgba(226, 232, 240, 0.35);
@@ -137,37 +108,11 @@
   outline-offset: 2px;
 }
 
-/* Ödeme ikonları satırı – küçük ekranda sarmala */
-:global(.d-flex.gap-3.align-items-center) {
-  flex-wrap: wrap;
-  row-gap: 6px;
-  /* Font Awesome kart ikonları boyutu */
-}
-@media (min-width: 768px) {
-  :global(.d-flex.gap-3.align-items-center) {
-    row-gap: 4px;
-  }
-}
-:global(.d-flex.gap-3.align-items-center) :global(.fa-2x) {
-  font-size: 1.7rem;
-}
-@media (min-width: 768px) {
-  :global(.d-flex.gap-3.align-items-center) :global(.fa-2x) {
-    font-size: 1.9rem;
-  }
-}
-@media (min-width: 992px) {
-  :global(.d-flex.gap-3.align-items-center) :global(.fa-2x) {
-    font-size: 2rem;
-  }
-}
-
 /* Alt şerit */
 .footerBottom {
   border-top: 1px solid rgba(226, 232, 240, 0.12);
   background: #0b1221;
   padding: 12px 0;
-  /* Alt linklerde tipografi */
 }
 @media (min-width: 768px) {
   .footerBottom {
@@ -178,31 +123,6 @@
   .footerBottom {
     padding: 16px 0;
   }
-}
-.footerBottom :global(.small) {
-  font-size: 12px;
-}
-@media (min-width: 768px) {
-  .footerBottom :global(.small) {
-    font-size: 12.5px;
-  }
-}
-@media (min-width: 992px) {
-  .footerBottom :global(.small) {
-    font-size: 13px;
-  }
-}
-.footerBottom :global(a) {
-  color: #cbd5e1;
-  text-decoration: none;
-}
-.footerBottom :global(a):hover {
-  color: #fff;
-}
-.footerBottom :global(a):focus-visible {
-  outline: 2px solid #df4f4f;
-  outline-offset: 2px;
-  border-radius: 6px;
 }
 
 /* Reduce motion tercihine saygı */

@@ -5,6 +5,7 @@
   border-radius: 14px;
   overflow: hidden;
   background: #000;
+  min-height: 220px; // 🔴 KRİTİK
 
   img {
     width: 100%;
@@ -22,7 +23,11 @@
     justify-content: flex-end;
     padding: 16px;
     color: #fff;
-    background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.55));
+    background: linear-gradient(
+      180deg,
+      rgba(0,0,0,0),
+      rgba(0,0,0,.55)
+    );
   }
 
   &__title {

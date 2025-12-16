@@ -1,10 +1,3 @@
-:root{
-  --wheel-size: 280px;
-  --item-size: 55px;
-  --gap: .60;
-  --radius: calc(var(--wheel-size)/2 - var(--item-size)*var(--gap));
-}
-
 /* ===== Block: wheel ===================================================== */
 .wheel {
   position: absolute;
@@ -26,10 +19,12 @@
     border: 0;
     background: transparent;
     cursor: pointer;
-    transform: rotate(var(--theta)) translate(var(--radius)) rotate(calc(var(--theta) * -1));
+    transform: rotate(var(--theta))
+      translate(var(--radius))
+      rotate(calc(var(--theta) * -1));
   }
 
-  /* Element: badge (logo kapsayıcı) */
+  /* Element: badge */
   &__badge {
     display: grid;
     place-items: center;
@@ -40,7 +35,7 @@
     box-shadow:
       0 1px 0 rgba(0,0,0,.04),
       0 6px 18px rgba(0,0,0,.10);
-    transform: rotate(calc(var(--wheel-angle) * -1)); /* logo dik kalsın */
+    transform: rotate(calc(var(--wheel-angle) * -1));
     transition: transform .18s ease, box-shadow .18s ease;
 
     > * { transition: transform .18s ease; }
@@ -68,7 +63,7 @@
   }
 }
 
-/* Hover etkileri */
+/* Hover */
 .wheel__item:hover .wheel__badge {
   box-shadow:
     0 1px 0 rgba(0,0,0,.05),
@@ -78,7 +73,7 @@
   transform: scale(1.06);
 }
 
-/* ===== Outer wrap (blok-dışı kapsayıcı) ================================= */
+/* ===== Outer wrap ======================================================= */
 .wheel-wrap {
   position: relative;
   width: var(--wheel-size);
@@ -86,7 +81,7 @@
   margin: 60px auto;
 }
 
-/* === Legacy class alias’ları (JSX’i değiştirmeden çalışsın) ============== */
+/* === Legacy alias’lar =================================================== */
 .wrap        { @extend .wheel-wrap; }
 .item        { @extend .wheel__item; }
 .badge       { @extend .wheel__badge; }
